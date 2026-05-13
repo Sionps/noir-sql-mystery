@@ -262,9 +262,8 @@ export default function SchemaViewer() {
           <div
             className="border-[12px] border-[#2a1d15] rounded-sm shadow-2xl flex flex-col"
             style={{
-              width: '90vw',
-              maxWidth: 900,
-              maxHeight: '90vh',
+              width: '98vw',
+              height: '98vh',
               backgroundColor: '#3d2b1f',
               backgroundImage: 'radial-gradient(#4d3b2f 1px, transparent 1px)',
               backgroundSize: '20px 20px'
@@ -280,7 +279,7 @@ export default function SchemaViewer() {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5">
+            <div className="relative flex-1 overflow-y-auto p-5">
               <div className="flex items-start gap-3 justify-center">
                 {/* Hub: persons */}
                 <div className="w-48 flex-shrink-0">
