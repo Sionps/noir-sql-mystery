@@ -245,19 +245,26 @@ export default function SchemaViewer() {
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
           onClick={close}
         >
           <div
-            className="bg-ink border border-border rounded-lg flex flex-col"
-            style={{ width: '90vw', maxWidth: 900, maxHeight: '90vh' }}
+            className="border-[12px] border-[#2a1d15] rounded-sm shadow-2xl flex flex-col"
+            style={{
+              width: '90vw',
+              maxWidth: 900,
+              maxHeight: '90vh',
+              backgroundColor: '#3d2b1f',
+              backgroundImage: 'radial-gradient(#4d3b2f 1px, transparent 1px)',
+              backgroundSize: '20px 20px'
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border flex-shrink-0">
-              <span className="text-xs text-gold font-mono uppercase tracking-widest">
-                Database Schema &mdash; Entity Relationship Diagram
+            <div className="flex items-center justify-between px-5 py-3 border-b border-[#2a1d15] bg-[#2a1d15]/30 flex-shrink-0">
+              <span className="text-xs text-yellow-200/70 font-mono uppercase tracking-widest italic">
+                Evidence Board &mdash; Case #402
               </span>
-              <button onClick={close} className="text-shadow hover:text-aged font-mono text-sm transition-colors cursor-pointer">
+              <button onClick={close} className="text-yellow-200/40 hover:text-yellow-200 font-mono text-sm transition-colors cursor-pointer">
                 &#x2715;
               </button>
             </div>
