@@ -156,7 +156,7 @@ function TableCard({ table, expanded, onToggle, setRef }: { table: TableInfo; ex
     <div
       ref={setRef}
       className={`relative bg-white p-3 pb-6 shadow-xl transition-all duration-200 cursor-pointer
-        ${expanded ? 'scale-110 z-10' : 'z-0'}
+        ${expanded || isHub ? 'scale-110 z-10' : 'z-0'}
       `}
       style={{ transform: `rotate(${rotation}deg)` }}
       onClick={onToggle}
@@ -341,7 +341,7 @@ export default function SchemaViewer() {
                   const midX = (conn.from.x + conn.to.x) / 2
                   const midY = (conn.from.y + conn.to.y) / 2
                   const controlX = midX
-                  const controlY = midY + 40
+                  const controlY = midY + 60
                   return (
                     <g key={i}>
                       <path
@@ -358,7 +358,7 @@ export default function SchemaViewer() {
                   )
                 })}
               </svg>
-              <div className="flex items-start gap-3 justify-center">
+              <div className="flex items-start gap-12 justify-center">
                 {/* Hub: persons */}
                 <div className="w-48 flex-shrink-0">
                   <TableCard
@@ -370,11 +370,11 @@ export default function SchemaViewer() {
                 </div>
 
                 {/* Arrows + FK tables */}
-                <div className="flex flex-col items-center gap-2">
+                <div className="flex flex-col items-center gap-12">
                   <RedYarn className="py-2" />
-                  <div className="flex flex-col gap-2 min-w-[160px]">
+                  <div className="flex flex-col gap-12 min-w-[160px]">
                     {fkTables.map((t) => (
-                      <div key={t.name} className="flex items-center gap-2">
+                      <div key={t.name} className="flex items-center gap-12">
                         <span className="text-[8px] text-gold-dim/30 font-mono w-4 text-center">&#x2192;</span>
                         <div className="flex-1">
                           <TableCard
@@ -390,9 +390,9 @@ export default function SchemaViewer() {
                 </div>
 
                 {/* Standalone divider + tables */}
-                <div className="flex items-stretch gap-3">
+                <div className="flex items-stretch gap-12">
                   <div className="w-px bg-border self-stretch" />
-                  <div className="flex flex-col gap-2 min-w-[160px]">
+                  <div className="flex flex-col gap-12 min-w-[160px]">
                     <div className="text-[9px] text-shadow font-mono uppercase tracking-wider opacity-40 pb-1 text-center">
                       Standalone
                     </div>
