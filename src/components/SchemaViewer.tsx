@@ -328,9 +328,35 @@ export default function SchemaViewer() {
 
             <div className="relative flex-1 overflow-y-auto p-5" ref={containerRef}>
               <svg className="absolute inset-0 pointer-events-none z-0 w-full h-full">
-                {connections.map((conn, i) => (
-                  <line key={i} x1={conn.from.x} y1={conn.from.y} x2={conn.to.x} y2={conn.to.y} stroke="red" strokeWidth="1" opacity="0.5" />
-                ))}
+                <defs>
+                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="1.5" result="blur" />
+                    <feMerge>
+                      <feMergeNode />
+                      <feMergeNode in="blur" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                {connections.map((conn, i) => {
+                  const midX = (conn.from.x + conn.to.x) / 2
+                  const midY = (conn.from.y + conn.to.y) / 2
+                  const controlX = midX
+                  const controlY = midY + 40
+                  return (
+                    <g key={i}>
+                      <path
+                        d={`M ${conn.from.x} ${conn.from.y} Q ${controlX} ${controlY} ${conn.to.x} ${conn.to.y}`}
+                        stroke="#b91c1c"
+                        strokeWidth="2"
+                        fill="none"
+                        filter="url(#glow)"
+                        opacity="0.6"
+                      />
+                      <circle cx={conn.from.x} cy={conn.from.y} r="2" fill="#b91c1c" />
+                      <circle cx={conn.to.x} cy={conn.to.y} r="2" fill="#b91c1c" />
+                    </g>
+                  )
+                })}
               </svg>
               <div className="flex items-start gap-3 justify-center">
                 {/* Hub: persons */}
