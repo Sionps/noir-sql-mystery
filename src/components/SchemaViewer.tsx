@@ -330,11 +330,10 @@ export default function SchemaViewer() {
               </div>
             </div>
 
-            <div className="flex gap-5 px-5 py-2.5 border-t border-border text-[10px] font-mono text-shadow flex-shrink-0">
-              <span><span className="text-gold">PK</span> primary key</span>
-              <span className="text-aged">FK foreign key</span>
-              <span className="text-shadow/60">&middot; plain column</span>
-              <span className="ml-auto text-shadow opacity-40 italic">click any table to expand &rarr; click a column for details</span>
+            <div className="flex gap-5 px-5 py-2.5 bg-[#2a1d15]/20 border-t border-[#2a1d15] text-[10px] font-serif italic text-yellow-200/40 flex-shrink-0">
+              <span><span className="text-red-600 font-bold">PK</span> primary key</span>
+              <span><span className="text-blue-600 font-bold">FK</span> foreign key</span>
+              <span className="ml-auto">Case Note: Click a polaroid to inspect details &rarr;</span>
             </div>
           </div>
         </div>
