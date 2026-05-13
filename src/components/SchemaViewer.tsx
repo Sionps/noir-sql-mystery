@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
+
+interface Point { x: number; y: number; }
 
 interface ColumnInfo {
   name: string
@@ -143,7 +145,7 @@ function KindBadge({ kind }: { kind: string }) {
   return null
 }
 
-function TableCard({ table, expanded, onToggle }: { table: TableInfo; expanded: boolean; onToggle: () => void }) {
+function TableCard({ table, expanded, onToggle, setRef }: { table: TableInfo; expanded: boolean; onToggle: () => void; setRef: (el: HTMLDivElement | null) => void }) {
   const [selectedCol, setSelectedCol] = useState<string | null>(null)
   const rotation = useMemo(() => getRandomRotation(), [])
 
@@ -152,6 +154,7 @@ function TableCard({ table, expanded, onToggle }: { table: TableInfo; expanded: 
 
   return (
     <div
+      ref={setRef}
       className={`relative bg-white p-3 pb-6 shadow-xl transition-all duration-200 cursor-pointer
         ${expanded ? 'scale-110 z-10' : 'z-0'}
       `}
@@ -217,6 +220,49 @@ function RedYarn({ className }: { className?: string }) {
 export default function SchemaViewer() {
   const [open, setOpen] = useState(false)
   const [expandedTables, setExpandedTables] = useState<Set<string>>(new Set())
+  const [connections, setConnections] = useState<{ from: Point; to: Point }[]>([])
+  const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map())
+
+  const updateLines = useCallback(() => {
+    requestAnimationFrame(() => {
+      const container = document.querySelector('.relative.flex-1.overflow-y-auto.p-5')
+      if (!container) return
+
+      const containerRect = container.getBoundingClientRect()
+      const hubEl = cardRefs.current.get('persons')
+      if (!hubEl) return
+
+      const hubRect = hubEl.getBoundingClientRect()
+      const hubCenter: Point = {
+        x: hubRect.left + hubRect.width / 2 - containerRect.left,
+        y: hubRect.top + hubRect.height / 2 - containerRect.top,
+      }
+
+      const newConnections: { from: Point; to: Point }[] = []
+
+      FK_NAMES.forEach((tableName) => {
+        const targetEl = cardRefs.current.get(tableName)
+        if (targetEl) {
+          const targetRect = targetEl.getBoundingClientRect()
+          const targetCenter: Point = {
+            x: targetRect.left + targetRect.width / 2 - containerRect.left,
+            y: targetRect.top + targetRect.height / 2 - containerRect.top,
+          }
+          newConnections.push({ from: hubCenter, to: targetCenter })
+        }
+      })
+
+      setConnections(newConnections)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+
+    updateLines()
+    window.addEventListener('resize', updateLines)
+    return () => window.removeEventListener('resize', updateLines)
+  }, [open, updateLines])
 
   const toggleTable = useCallback((name: string) => {
     setExpandedTables((prev) => {
@@ -287,6 +333,7 @@ export default function SchemaViewer() {
                     table={persons}
                     expanded={expandedTables.has(persons.name)}
                     onToggle={() => toggleTable(persons.name)}
+                    setRef={(el) => { if (el) cardRefs.current.set(persons.name, el); }}
                   />
                 </div>
 
@@ -302,6 +349,7 @@ export default function SchemaViewer() {
                             table={t}
                             expanded={expandedTables.has(t.name)}
                             onToggle={() => toggleTable(t.name)}
+                            setRef={(el) => { if (el) cardRefs.current.set(t.name, el); }}
                           />
                         </div>
                       </div>
@@ -322,6 +370,7 @@ export default function SchemaViewer() {
                         table={t}
                         expanded={expandedTables.has(t.name)}
                         onToggle={() => toggleTable(t.name)}
+                        setRef={(el) => { if (el) cardRefs.current.set(t.name, el); }}
                       />
                     ))}
                   </div>
