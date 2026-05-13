@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { LEVELS } from '@/data/levels'
 import { useGameStore } from '@/store/gameStore'
 
@@ -9,16 +9,39 @@ interface CaseBriefingProps {
 export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
   const setLevel = useGameStore((s) => s.setLevel)
   const setBriefingLevel = useGameStore((s) => s.setBriefingLevel)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const level = LEVELS.find((l) => l.num === levelNum)
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setBriefingLevel(null)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    buttonRef.current?.focus()
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [setBriefingLevel])
 
   if (!level) return null
 
   const narrativeHook = level.story[0]?.text || ''
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="relative max-w-lg w-full">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300"
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="briefing-title"
+        className="relative max-w-lg w-full animate-in zoom-in-95 duration-300"
+      >
         {/* Red push-pin */}
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-red-600 rounded-full shadow-sm z-10" />
 
@@ -28,7 +51,7 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
           <div className="space-y-6">
             <div className="space-y-2">
               <span className="text-[10px] uppercase tracking-widest opacity-60 font-mono">Case Briefing</span>
-              <h2 className="text-2xl font-bold italic leading-tight">
+              <h2 id="briefing-title" className="text-2xl font-bold italic leading-tight">
                 {level.title}
               </h2>
             </div>
@@ -48,6 +71,7 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
 
             <div className="pt-8 flex justify-center">
               <button
+                ref={buttonRef}
                 onClick={() => {
                   setLevel(levelNum)
                   setBriefingLevel(null)
