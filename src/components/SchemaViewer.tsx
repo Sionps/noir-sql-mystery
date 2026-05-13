@@ -222,10 +222,11 @@ export default function SchemaViewer() {
   const [expandedTables, setExpandedTables] = useState<Set<string>>(new Set())
   const [connections, setConnections] = useState<{ from: Point; to: Point }[]>([])
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map())
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const updateLines = useCallback(() => {
     requestAnimationFrame(() => {
-      const container = document.querySelector('.relative.flex-1.overflow-y-auto.p-5')
+      const container = containerRef.current
       if (!container) return
 
       const containerRect = container.getBoundingClientRect()
@@ -325,7 +326,12 @@ export default function SchemaViewer() {
               </button>
             </div>
 
-            <div className="relative flex-1 overflow-y-auto p-5">
+            <div className="relative flex-1 overflow-y-auto p-5" ref={containerRef}>
+              <svg className="absolute inset-0 pointer-events-none z-0 w-full h-full">
+                {connections.map((conn, i) => (
+                  <line key={i} x1={conn.from.x} y1={conn.from.y} x2={conn.to.x} y2={conn.to.y} stroke="red" strokeWidth="1" opacity="0.5" />
+                ))}
+              </svg>
               <div className="flex items-start gap-3 justify-center">
                 {/* Hub: persons */}
                 <div className="w-48 flex-shrink-0">
