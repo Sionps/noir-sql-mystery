@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 
 interface ColumnInfo {
   name: string
@@ -145,7 +145,7 @@ function KindBadge({ kind }: { kind: string }) {
 
 function TableCard({ table, expanded, onToggle }: { table: TableInfo; expanded: boolean; onToggle: () => void }) {
   const [selectedCol, setSelectedCol] = useState<string | null>(null)
-  const rotation = getRandomRotation()
+  const rotation = useMemo(() => getRandomRotation(), [])
 
   const isHub = table.name === 'persons'
   const isStandalone = table.standalone
