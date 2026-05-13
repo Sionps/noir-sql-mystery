@@ -45,10 +45,9 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
         {/* Red push-pin */}
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-red-600 rounded-full shadow-sm z-10" />
 
-        <div className="bg-[#fff9c4] text-[#5d4037] font-serif p-8 md:p-12 shadow-2xl transform -rotate-2 relative overflow-hidden border border-[#e6dec4]">
+        <div className="bg-[#fff9c4] text-[#5d4037] font-serif p-8 md:p-12 shadow-2xl transform -rotate-2 relative overflow-hidden border border-[#e6dec4] animate-float">
           {/* Paper texture/subtle lines could go here, but keeping it clean as per requirements */}
-
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div className="space-y-2">
               <span className="text-[10px] uppercase tracking-widest opacity-60 font-mono">Case Briefing</span>
               <h2 id="briefing-title" className="text-2xl font-bold italic leading-tight">
@@ -56,27 +55,27 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
               </h2>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               <p className="italic leading-relaxed text-lg">
                 "{narrativeHook}"
               </p>
 
-              <div className="pt-4 border-t border-[#dccf9e]">
-                <span className="text-xs uppercase tracking-wider font-mono opacity-70 block mb-1">Objective</span>
+              <div className="pt-6 border-t border-[#dccf9e]">
+                <span className="text-xs uppercase tracking-wider font-mono opacity-70 block mb-2">Objective</span>
                 <p className="font-bold text-lg">
                   {level.objective}
                 </p>
               </div>
             </div>
 
-            <div className="pt-8 flex justify-center">
+            <div className="pt-10 flex justify-center">
               <button
                 ref={buttonRef}
                 onClick={() => {
                   setLevel(levelNum)
                   setBriefingLevel(null)
                 }}
-                className="bg-[#5d4037] text-[#fff9c4] px-6 py-2 text-xs font-mono uppercase hover:bg-black transition-all shadow-md active:translate-y-0.5"
+                className="bg-[#5d4037] text-[#fff9c4] px-6 py-2 text-xs font-mono uppercase hover:bg-black hover:brightness-110 hover:scale-105 transition-all shadow-md active:translate-y-0.5"
               >
                 Start Digging
               </button>
