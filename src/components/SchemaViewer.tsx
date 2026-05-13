@@ -133,55 +133,65 @@ const TABLES: TableInfo[] = [
 const FK_NAMES = ['hotel_log', 'phone_rec', 'messages', 'financials', 'bar_tabs', 'alley_log']
 const STANDALONE_NAMES = ['evidence', 'witnesses', 'staff']
 
+function getRandomRotation() {
+  return (Math.random() * 6 - 3).toFixed(2)
+}
+
 function KindBadge({ kind }: { kind: string }) {
-  if (kind === 'pk') return <span className="text-gold text-[10px] font-mono font-bold">PK</span>
-  if (kind === 'fk') return <span className="text-aged text-[10px] font-mono">FK</span>
+  if (kind === 'pk') return <span className="bg-red-600 text-white px-1 rounded text-[8px] font-mono font-bold">PK</span>
+  if (kind === 'fk') return <span className="bg-blue-600 text-white px-1 rounded text-[8px] font-mono">FK</span>
   return null
 }
 
 function TableCard({ table, expanded, onToggle }: { table: TableInfo; expanded: boolean; onToggle: () => void }) {
   const [selectedCol, setSelectedCol] = useState<string | null>(null)
+  const rotation = getRandomRotation()
 
   const isHub = table.name === 'persons'
   const isStandalone = table.standalone
 
-  const borderColor = isHub ? 'border-gold' : isStandalone ? 'border-border border-dashed' : 'border-border'
-
   return (
-    <div className={`bg-ink ${borderColor} border rounded ${isHub ? 'shadow-md shadow-gold-dim/10' : ''}`}>
-      <button
-        onClick={onToggle}
-        className={`w-full text-left px-3 py-2 font-display text-xs transition-colors flex items-center justify-between gap-2 ${
-          isHub ? 'text-gold' : isStandalone ? 'text-shadow/60' : 'text-paper'
-        } hover:bg-surface/50 ${expanded ? 'border-b border-border' : ''}`}
-      >
-        <span>{table.name}</span>
-        <span className="text-[9px] text-shadow font-mono opacity-60">{table.columns.length} cols</span>
-      </button>
+    <div
+      className={`relative bg-white p-3 pb-6 shadow-xl transition-all duration-200 cursor-pointer
+        ${expanded ? 'scale-110 z-10' : 'z-0'}
+      `}
+      style={{ transform: `rotate(${rotation}deg)` }}
+      onClick={onToggle}
+    >
+      {/* Push Pin */}
+      <div className={`absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full shadow-sm ${isHub ? 'bg-red-600' : 'bg-blue-600'}`} />
+
+      <div className={`text-sm uppercase font-serif font-bold mb-1 ${isHub ? 'text-black' : 'text-zinc-800'}`}>
+        {table.name}
+      </div>
+
+      <div className="text-[9px] text-zinc-500 font-serif italic mb-3 leading-tight">
+        {table.description}
+      </div>
 
       {expanded && (
-        <div className="p-2 space-y-0.5">
-          <div className="px-2 py-1 text-[9px] text-aged font-mono leading-relaxed border-b border-border mb-1">
-            {table.description}
-          </div>
+        <div className="space-y-0.5 pt-2 border-t border-zinc-100">
           {table.columns.map((col) => {
             const isColSelected = selectedCol === col.name
             return (
               <div key={col.name}>
-                <button
-                  onClick={() => setSelectedCol(isColSelected ? null : col.name)}
-                  className="w-full flex items-center gap-2 text-left px-2 py-1 rounded hover:bg-surface/50 transition-colors"
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedCol(isColSelected ? null : col.name);
+                  }}
+                  className="flex items-center gap-2 text-left py-1 rounded hover:bg-zinc-50 transition-colors group"
                 >
                   <KindBadge kind={col.kind} />
-                  <span className={`text-[11px] font-mono ${col.kind === 'pk' ? 'text-gold' : col.kind === 'fk' ? 'text-aged' : 'text-shadow'}`}>
+                  <span className="text-[11px] font-mono text-zinc-700 group-hover:text-black">
                     {col.name}
                   </span>
                   {col.fkTarget && (
-                    <span className="text-[8px] text-shadow font-mono ml-auto opacity-40">&#x2192;{col.fkTarget}</span>
+                    <span className="text-[8px] text-zinc-400 font-mono ml-auto">&#x2192;{col.fkTarget}</span>
                   )}
-                </button>
+                </div>
                 {isColSelected && (
-                  <div className="mx-3 px-2 py-1.5 mb-1 bg-surface border border-border rounded text-[10px] text-aged font-mono leading-relaxed">
+                  <div className="mx-1 px-2 py-1.5 mb-1 bg-zinc-50 border border-zinc-200 rounded text-[10px] text-zinc-600 font-mono leading-relaxed italic">
                     {col.description}
                   </div>
                 )}
