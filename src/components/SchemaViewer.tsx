@@ -204,11 +204,12 @@ function TableCard({ table, expanded, onToggle }: { table: TableInfo; expanded: 
   )
 }
 
-function Arrow({ className }: { className?: string }) {
+function RedYarn({ className }: { className?: string }) {
   return (
-    <div className={`flex items-center justify-center ${className || ''}`}>
-      <div className="w-6 h-px bg-gradient-to-r from-transparent via-gold-dim/40 to-transparent" />
-      <span className="text-[10px] text-gold-dim/40 font-mono -ml-2">&#x2192;</span>
+    <div className={`relative flex items-center justify-center w-12 h-1 ${className || ''}`}>
+      <div className="absolute inset-0 bg-[#b91c1c] shadow-[0_0_4px_rgba(185,28,28,0.5)]" />
+      <div className="absolute -left-1 -top-1 w-2 h-2 bg-red-800 rounded-full" />
+      <div className="absolute -right-1 -top-1 w-2 h-2 bg-red-800 rounded-full" />
     </div>
   )
 }
@@ -292,7 +293,7 @@ export default function SchemaViewer() {
 
                 {/* Arrows + FK tables */}
                 <div className="flex flex-col items-center gap-2">
-                  <Arrow className="py-2" />
+                  <RedYarn className="py-2" />
                   <div className="flex flex-col gap-2 min-w-[160px]">
                     {fkTables.map((t) => (
                       <div key={t.name} className="flex items-center gap-2">
