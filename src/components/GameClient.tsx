@@ -9,6 +9,8 @@ import type { FeedbackState } from './FeedbackBar'
 import type { SQLEditorHandle } from './SQLEditor'
 import LevelNav from './LevelNav'
 import StoryPanel from './StoryPanel'
+import DetectiveNotepad from './DetectiveNotepad'
+import CaseBriefing from './CaseBriefing'
 import SQLEditor from './SQLEditor'
 import ResultsTable from './ResultsTable'
 import FeedbackBar from './FeedbackBar'
@@ -21,6 +23,7 @@ import VerdictModal from './VerdictModal'
 export default function GameClient() {
   const currentLevel  = useGameStore((s) => s.currentLevel)
   const setLevel      = useGameStore((s) => s.setLevel)
+  const briefingLevel = useGameStore((s) => s.briefingLevel)
   const solveLevel    = useGameStore((s) => s.solveLevel)
   const claimBonus    = useGameStore((s) => s.claimBonus)
   const useHint       = useGameStore((s) => s.useHint)
@@ -38,6 +41,35 @@ export default function GameClient() {
 
   const editorRef = useRef<SQLEditorHandle>(null)
   const level = LEVELS[currentLevel - 1]
+
+  const [sidebarWidth, setSidebarWidth] = useState(320)
+  const isResizing = useRef(false)
+
+  const handleResizerMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault()
+    isResizing.current = true
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+    const startX = e.clientX
+    const startW = sidebarWidth
+
+    const onMove = (ev: MouseEvent) => {
+      if (!isResizing.current) return
+      const newWidth = Math.max(240, Math.min(480, startW + ev.clientX - startX))
+      setSidebarWidth(newWidth)
+    }
+
+    const onUp = () => {
+      isResizing.current = false
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseup', onUp)
+    }
+
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }, [sidebarWidth])
 
   useEffect(() => { initDB().then(() => setDbReady(true)); return () => resetDB() }, [])
   useEffect(() => { if (accusationMade) setShowVerdict(true) }, [accusationMade])
@@ -115,13 +147,21 @@ export default function GameClient() {
         </div>
       </header>
 
-      <LevelNav />
+      <div className="flex items-center px-4 py-2 border-b border-border bg-ink">
+        <LevelNav />
+        <div className="ml-auto">
+          <SchemaViewer />
+        </div>
+      </div>
 
       <div className="flex flex-1 overflow-hidden">
-        <aside className="w-80 flex-shrink-0 border-r border-border flex flex-col overflow-y-auto bg-ink">
+        <aside
+          className="flex-shrink-0 border-r border-border flex flex-col overflow-y-auto bg-ink"
+          style={{ width: sidebarWidth }}
+        >
           <StoryPanel level={level} />
+          <DetectiveNotepad />
           <BonusClue level={level} />
-          <SchemaViewer />
           <SuspectList />
           <div className="mt-auto p-4 border-t border-border">
             <button
@@ -139,6 +179,13 @@ export default function GameClient() {
             </button>
           </div>
         </aside>
+
+        <div
+          className="w-1 flex-shrink-0 cursor-col-resize bg-border hover:bg-gold-dim transition-colors relative group"
+          onMouseDown={handleResizerMouseDown}
+        >
+          <div className="absolute inset-y-0 -left-1 -right-1" />
+        </div>
 
         <main className="flex-1 flex flex-col overflow-hidden p-4 gap-3">
           <div>
@@ -181,6 +228,7 @@ export default function GameClient() {
 
       {showAccuse && <AccuseModal onClose={() => setShowAccuse(false)} />}
       {showVerdict && <VerdictModal onClose={() => setShowVerdict(false)} />}
+      {briefingLevel !== null && <CaseBriefing levelNum={briefingLevel} />}
     </div>
   )
 }
