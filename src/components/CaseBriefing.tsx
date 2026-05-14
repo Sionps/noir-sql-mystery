@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import { LEVELS } from '@/data/levels'
 import { useGameStore } from '@/store/gameStore'
+import { useTranslation } from '@/hooks/useTranslation'
+import { useLocalizedLevel } from '@/hooks/useLocalizedLevel'
 
 interface CaseBriefingProps {
   levelNum: number
@@ -9,9 +11,11 @@ interface CaseBriefingProps {
 export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
   const setLevel = useGameStore((s) => s.setLevel)
   const setBriefingLevel = useGameStore((s) => s.setBriefingLevel)
+  const { t } = useTranslation()
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const level = LEVELS.find((l) => l.num === levelNum)
+  const rawLevel = LEVELS.find((l) => l.num === levelNum)
+  const level    = useLocalizedLevel(rawLevel ?? LEVELS[0])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -28,7 +32,7 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
     }
   }, [setBriefingLevel])
 
-  if (!level) return null
+  if (!rawLevel) return null
 
   const narrativeHook = level.story[0]?.text || ''
 
@@ -49,7 +53,7 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
           {/* Paper texture/subtle lines could go here, but keeping it clean as per requirements */}
           <div className="space-y-8">
             <div className="space-y-2">
-              <span className="text-[10px] uppercase tracking-widest opacity-60 font-mono">Case Briefing</span>
+              <span className="text-[10px] uppercase tracking-widest opacity-60 font-mono">{t('ui.case_briefing')}</span>
               <h2 id="briefing-title" className="text-2xl font-bold italic leading-tight">
                 {level.title}
               </h2>
@@ -61,7 +65,7 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
               </p>
 
               <div className="pt-6 border-t border-[#dccf9e]">
-                <span className="text-xs uppercase tracking-wider font-mono opacity-70 block mb-2">Objective</span>
+                <span className="text-xs uppercase tracking-wider font-mono opacity-70 block mb-2">{t('ui.objective')}</span>
                 <p className="font-bold text-lg">
                   {level.objective}
                 </p>
@@ -77,7 +81,7 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
                 }}
                 className="bg-[#5d4037] text-[#fff9c4] px-6 py-2 text-xs font-mono uppercase hover:bg-black hover:brightness-110 hover:scale-105 transition-all shadow-md active:translate-y-0.5"
               >
-                Start Digging
+                {t('ui.start_digging')}
               </button>
             </div>
           </div>
