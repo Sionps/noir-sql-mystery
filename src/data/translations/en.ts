@@ -54,6 +54,9 @@ export const en = {
     verdict_guilty: 'Diane Harlow — Guilty',
     query_error: 'That query did not reveal what we need. Try a different approach.',
     sql_error: 'SQL error',
+    notes_placeholder: 'Jot down clues, suspects, timestamps…',
+    notes_saved: 'Saved automatically.',
+    solve_1_more_level: 'Solve 1 more level',
   },
   levels: {},
   suspects: {

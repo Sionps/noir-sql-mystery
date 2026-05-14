@@ -13,12 +13,14 @@ function TaskRow({
   type,
   text,
   xpLabel,
+  isBonus,
 }: {
   done: boolean
   locked: boolean
   type: string
   text: string
   xpLabel: string
+  isBonus: boolean
 }) {
   return (
     <div className={`flex items-start gap-2 py-2 border-b border-border last:border-0 ${locked ? 'opacity-40' : ''}`}>
@@ -34,7 +36,7 @@ function TaskRow({
         </p>
         {!locked && (
           <span className={`inline-block mt-1 text-xs font-mono px-1.5 py-0.5 rounded ${
-            done ? 'text-shadow bg-surface' : type.includes('Bonus') ? 'text-gold-dim bg-dim' : 'text-gold bg-dim'
+            done ? 'text-shadow bg-surface' : isBonus ? 'text-gold-dim bg-dim' : 'text-gold bg-dim'
           }`}>
             {xpLabel}
           </span>
@@ -96,6 +98,7 @@ export default function DetectiveNotepad() {
                 <TaskRow
                   done={isSolved}
                   locked={isLocked}
+                  isBonus={false}
                   type={isLocked ? t('ui.level_locked', { n: level.num }) : isSolved ? t('ui.level_done', { n: level.num }) : t('ui.level_current', { n: level.num })}
                   text={isLocked ? t('ui.locked_prompt') : level.objective}
                   xpLabel={isSolved ? t('ui.xp_earned', { n: 100 }) : t('ui.xp_reward', { n: 100 })}
@@ -104,6 +107,7 @@ export default function DetectiveNotepad() {
                   <TaskRow
                     done={isBonusDone}
                     locked={isLocked}
+                    isBonus={true}
                     type={isLocked ? t('ui.level_bonus_locked', { n: level.num }) : isBonusDone ? t('ui.level_bonus_done', { n: level.num }) : t('ui.level_bonus', { n: level.num })}
                     text={isLocked ? t('ui.locked_prompt') : level.bonus_prompt}
                     xpLabel={isBonusDone ? t('ui.xp_earned', { n: 50 }) : t('ui.xp_reward', { n: 50 })}
@@ -120,10 +124,10 @@ export default function DetectiveNotepad() {
           <textarea
             value={notes}
             onChange={handleNotes}
-            placeholder="Jot down clues, suspects, timestamps\u2026"
+            placeholder={t('ui.notes_placeholder')}
             className="w-full h-40 bg-surface border border-border rounded p-2 text-xs text-aged font-mono leading-relaxed resize-none outline-none focus:border-shadow placeholder:text-shadow"
           />
-          <p className="text-xs text-shadow font-mono mt-1">Saved automatically.</p>
+          <p className="text-xs text-shadow font-mono mt-1">{t('ui.notes_saved')}</p>
         </div>
       )}
     </div>

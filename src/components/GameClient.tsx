@@ -187,7 +187,9 @@ export default function GameClient() {
               ].join(' ')}>
               {canAccuse()
                 ? t('ui.make_accusation')
-                : t('ui.solve_x_more_levels', { x: 8 - solved.length })}
+                : (8 - solved.length) === 1
+                  ? t('ui.solve_1_more_level')
+                  : t('ui.solve_x_more_levels', { x: 8 - solved.length })}
             </button>
           </div>
         </aside>

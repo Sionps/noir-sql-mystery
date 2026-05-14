@@ -54,6 +54,9 @@ export const th = {
     verdict_guilty: 'ดีแอน ฮาร์โลว์ — มีความผิด',
     query_error: 'คำสั่งนี้ไม่ได้ข้อมูลที่เราต้องการ ลองวิธีอื่น',
     sql_error: 'ข้อผิดพลาด SQL',
+    notes_placeholder: 'จดเบาะแส ผู้ต้องสงสัย เวลา...',
+    notes_saved: 'บันทึกอัตโนมัติ',
+    solve_1_more_level: 'ต้องไขคดีเพิ่มอีก 1 ระดับ',
   },
   levels: {
     1: {
