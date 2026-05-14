@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { LEVELS, Level } from '@/data/levels'
 import { translations } from '@/data/translations'
 import { useGameStore } from '@/store/gameStore'
@@ -21,19 +22,23 @@ function applyTranslation(level: Level, translated: any): Level {
 
 export function useLocalizedLevel(level: Level): Level {
   const language = useGameStore((s) => s.language)
-  if (language === 'en') return level
-  const translated = (translations[language] as any).levels?.[level.num]
-  if (!translated) return level
-  return applyTranslation(level, translated)
+  return useMemo(() => {
+    if (language === 'en') return level
+    const translated = (translations[language] as any).levels?.[level.num]
+    if (!translated) return level
+    return applyTranslation(level, translated)
+  }, [language, level])
 }
 
 export function useLocalizedLevels(): Level[] {
   const language = useGameStore((s) => s.language)
-  if (language === 'en') return LEVELS
-  const translatedLevels = (translations[language] as any).levels ?? {}
-  return LEVELS.map((level) => {
-    const translated = translatedLevels[level.num]
-    if (!translated) return level
-    return applyTranslation(level, translated)
-  })
+  return useMemo(() => {
+    if (language === 'en') return LEVELS
+    const translatedLevels = (translations[language] as any).levels ?? {}
+    return LEVELS.map((level) => {
+      const translated = translatedLevels[level.num]
+      if (!translated) return level
+      return applyTranslation(level, translated)
+    })
+  }, [language])
 }
