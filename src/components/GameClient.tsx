@@ -5,12 +5,14 @@ import { useGameStore } from '@/store/gameStore'
 import { LEVELS } from '@/data/levels'
 import { initDB, runQuery, resetDB } from '@/lib/db'
 import { validateResult } from '@/lib/validator'
+import { useTranslation } from '@/hooks/useTranslation'
+import { useLocalizedLevel } from '@/hooks/useLocalizedLevel'
 import type { FeedbackState } from './FeedbackBar'
 import type { SQLEditorHandle } from './SQLEditor'
 import LevelNav from './LevelNav'
 import StoryPanel from './StoryPanel'
 import DetectiveNotepad from './DetectiveNotepad'
-import CaseBriefing from './CaseBriefing'
+import { CaseBriefing } from './CaseBriefing'
 import SQLEditor from './SQLEditor'
 import ResultsTable from './ResultsTable'
 import FeedbackBar from './FeedbackBar'
@@ -24,6 +26,8 @@ export default function GameClient() {
   const currentLevel  = useGameStore((s) => s.currentLevel)
   const setLevel      = useGameStore((s) => s.setLevel)
   const briefingLevel = useGameStore((s) => s.briefingLevel)
+  const language     = useGameStore((s) => s.language)
+  const setLanguage   = useGameStore((s) => s.setLanguage)
   const solveLevel    = useGameStore((s) => s.solveLevel)
   const claimBonus    = useGameStore((s) => s.claimBonus)
   const useHint       = useGameStore((s) => s.useHint)
@@ -40,7 +44,9 @@ export default function GameClient() {
   const [showVerdict,  setShowVerdict]  = useState(false)
 
   const editorRef = useRef<SQLEditorHandle>(null)
-  const level = LEVELS[currentLevel - 1]
+  const { t } = useTranslation()
+  const rawLevel = LEVELS[currentLevel - 1]
+  const level    = useLocalizedLevel(rawLevel)
 
   const [sidebarWidth, setSidebarWidth] = useState(320)
   const isResizing = useRef(false)
@@ -102,10 +108,10 @@ export default function GameClient() {
         setFeedback({ type: 'success', message: level.success })
         return
       }
-      setFeedback({ type: 'error', message: "That query did not reveal what we need. Try a different approach." })
+      setFeedback({ type: 'error', message: t('ui.query_error') })
     } catch (e: any) {
       setQueryResult({ columns: [], rows: [] })
-      setFeedback({ type: 'error', message: `SQL error: ${e.message}` })
+      setFeedback({ type: 'error', message: `${t('ui.sql_error')}: ${e.message}` })
     }
   }, [dbReady, level, solved, solveLevel, claimBonus])
 
@@ -127,8 +133,8 @@ export default function GameClient() {
     return (
       <div className="h-screen flex items-center justify-center bg-surface text-aged font-mono">
         <div className="text-center space-y-2">
-          <div className="text-gold font-display text-2xl">Loading case files...</div>
-          <div className="text-sm text-shadow">Initializing database</div>
+          <div className="text-gold font-display text-2xl">{t('ui.loading_case_files')}</div>
+          <div className="text-sm text-shadow">{t('ui.initializing_database')}</div>
         </div>
       </div>
     )
@@ -139,8 +145,14 @@ export default function GameClient() {
   return (
     <div className="h-screen flex flex-col bg-surface overflow-hidden">
       <header className="flex items-center justify-between px-4 py-2 border-b border-border bg-ink">
-        <div className="font-display text-xl text-gold">Dead on Arrival</div>
+        <div className="font-display text-xl text-gold">{t('ui.game_title')}</div>
         <div className="flex items-center gap-4 text-xs font-mono">
+          <button
+            onClick={() => setLanguage(language === 'en' ? 'th' : 'en')}
+            className="text-shadow hover:text-gold transition-colors uppercase tracking-tighter"
+          >
+            {language === 'en' ? 'ไทย' : 'ENG'}
+          </button>
           <span className="text-shadow hidden md:inline">{level.location}</span>
           <span className="text-shadow hidden md:inline">{level.time}</span>
           <span className="text-gold-dim">XP: {xp}</span>
@@ -174,8 +186,8 @@ export default function GameClient() {
                   : 'bg-surface text-shadow border border-border cursor-not-allowed',
               ].join(' ')}>
               {canAccuse()
-                ? 'Make Accusation'
-                : `Solve ${8 - solved.length} more level${8 - solved.length !== 1 ? 's' : ''}`}
+                ? t('ui.make_accusation')
+                : t('ui.solve_x_more_levels', { x: 8 - solved.length })}
             </button>
           </div>
         </aside>
@@ -190,7 +202,7 @@ export default function GameClient() {
         <main className="flex-1 flex flex-col overflow-hidden p-4 gap-3">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <span className="text-xs text-gold-dim font-mono uppercase tracking-widest">Level {level.num}</span>
+              <span className="text-xs text-gold-dim font-mono uppercase tracking-widest">{t('ui.level_label')} {level.num}</span>
               <span className="text-xs bg-dim text-shadow px-2 py-0.5 rounded font-mono">{level.badge}</span>
             </div>
             <h1 className="font-display text-xl text-paper">{level.title}</h1>
@@ -202,16 +214,16 @@ export default function GameClient() {
           <div className="flex gap-2">
             <button onClick={handleRunButton}
               className="px-4 py-2 bg-gold text-ink text-sm font-display rounded hover:bg-amber-400 transition-colors">
-              Run Query
+              {t('ui.run_query')}
             </button>
             <button onClick={handleHint} disabled={hintsLeft(level.num) === 0}
               className="px-4 py-2 bg-dim border border-border text-aged text-sm font-mono rounded hover:border-shadow transition-colors disabled:text-shadow disabled:cursor-not-allowed">
-              Hint ({hintsLeft(level.num)} left)
+              {t('ui.hint_with_count', { n: hintsLeft(level.num) })}
             </button>
             <button
               onClick={() => { setQueryResult({ columns: [], rows: [] }); setFeedback({ type: 'idle' }) }}
               className="px-4 py-2 bg-surface border border-border text-shadow text-sm font-mono rounded hover:text-aged transition-colors">
-              Clear
+              {t('ui.clear')}
             </button>
           </div>
 
