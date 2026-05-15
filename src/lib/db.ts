@@ -13,8 +13,11 @@ export async function initDB(): Promise<void> {
   db.run(SEED_SQL)
 }
 
+const BLOCKED = /^\s*(insert|update|delete|drop|create|alter|replace|truncate|attach|detach|pragma)\b/i
+
 export function runQuery(query: string): { columns: string[]; rows: any[][] } {
   if (!db) throw new Error('Database not initialized — call initDB() first')
+  if (BLOCKED.test(query)) throw new Error('Only SELECT queries are allowed')
 
   let stmt: Statement | null = null
   try {
