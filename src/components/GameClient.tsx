@@ -84,6 +84,7 @@ export default function GameClient() {
   useEffect(() => {
     setFeedback({ type: 'idle' })
     setQueryResult({ columns: [], rows: [] })
+    setActiveTab('query')
   }, [currentLevel])
 
   const handleRun = useCallback((query: string) => {
