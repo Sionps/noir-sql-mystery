@@ -48,7 +48,7 @@ export const SUSPECTS = [
     age:       44,
     height:    "5'11\"",
     build:     'Heavy',
-    hair:      'Dark',
+    hair:      'Dark Brown',
     eyes:      'Blue',
   },
   {
