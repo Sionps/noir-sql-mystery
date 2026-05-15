@@ -53,6 +53,18 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
           {/* Paper texture/subtle lines could go here, but keeping it clean as per requirements */}
           <div className="space-y-8">
             <div className="space-y-2">
+              {/* Stamps */}
+              <div className="flex items-center gap-2 mb-1">
+                <span className="border border-[#8b6020] text-[#8b6020] font-mono text-[7px] uppercase tracking-wider px-1.5 py-0.5">
+                  Confidential
+                </span>
+                <span className="border border-[#8b6020] text-[#8b6020] font-mono text-[7px] uppercase tracking-wider px-1.5 py-0.5">
+                  Open
+                </span>
+                <span className="ml-auto font-mono text-[8px] text-[#a08040] opacity-60">
+                  {`#${String(levelNum).padStart(3, '0')}-A`}
+                </span>
+              </div>
               <span className="text-[10px] uppercase tracking-widest opacity-60 font-mono">{t('ui.case_briefing')}</span>
               <h2 id="briefing-title" className="text-2xl font-bold italic leading-tight">
                 {level.title}
