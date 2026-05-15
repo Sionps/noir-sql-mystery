@@ -57,6 +57,8 @@ export const en = {
     notes_placeholder: 'Jot down clues, suspects, timestamps…',
     notes_saved: 'Saved automatically.',
     solve_1_more_level: 'Solve 1 more level',
+    evidence_query: 'Evidence Query',
+    detective_notes: 'Detective Notes',
   },
   levels: {},
   suspects: {

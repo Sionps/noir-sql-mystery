@@ -48,6 +48,7 @@ export default function GameClient() {
   const rawLevel = LEVELS[currentLevel - 1]
   const level    = useLocalizedLevel(rawLevel)
 
+  const [activeTab, setActiveTab] = useState<'query' | 'notes'>('query')
   const [sidebarWidth, setSidebarWidth] = useState(320)
   const isResizing = useRef(false)
 
@@ -162,11 +163,8 @@ export default function GameClient() {
         </div>
       </header>
 
-      <div className="flex items-center px-4 py-2 border-b border-border bg-ink">
+      <div className="flex items-center px-4 py-1.5 border-b border-border bg-ink">
         <LevelNav />
-        <div className="ml-auto">
-          <SchemaViewer />
-        </div>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
@@ -175,7 +173,6 @@ export default function GameClient() {
           style={{ width: sidebarWidth }}
         >
           <StoryPanel level={level} />
-          <DetectiveNotepad />
           <BonusClue level={level} />
           <SuspectList />
           <div className="mt-auto p-4 border-t border-border">
@@ -204,42 +201,83 @@ export default function GameClient() {
           <div className="absolute inset-y-0 -left-1 -right-1" />
         </div>
 
-        <main className="flex-1 flex flex-col overflow-hidden p-4 gap-3">
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <span className="text-xs text-gold-dim font-mono uppercase tracking-widest">{t('ui.level_label')} {level.num}</span>
-              <span className="text-xs bg-dim text-shadow px-2 py-0.5 rounded font-mono">{level.badge}</span>
-            </div>
-            <h1 className="font-display text-xl text-paper">{level.title}</h1>
-            <p className="text-sm text-shadow font-mono mt-1">{level.objective}</p>
-          </div>
-
-          <SQLEditor ref={editorRef} onRun={handleRun} />
-
-          <div className="flex gap-2">
-            <button onClick={handleRunButton}
-              className="px-4 py-2 bg-gold text-ink text-sm font-display rounded hover:bg-amber-400 transition-colors">
-              {t('ui.run_query')}
-            </button>
-            <button onClick={handleHint} disabled={hintsLeft(level.num) === 0}
-              className="px-4 py-2 bg-dim border border-border text-aged text-sm font-mono rounded hover:border-shadow transition-colors disabled:text-shadow disabled:cursor-not-allowed">
-              {t('ui.hint_with_count', { n: hintsLeft(level.num) })}
-            </button>
+        <main className="flex-1 flex flex-col overflow-hidden">
+          {/* Tab bar — SchemaViewer renders its own button inline in the row */}
+          <div className="flex items-end gap-0.5 px-4 pt-3 border-b border-border bg-ink flex-shrink-0">
             <button
-              onClick={() => { setQueryResult({ columns: [], rows: [] }); setFeedback({ type: 'idle' }) }}
-              className="px-4 py-2 bg-surface border border-border text-shadow text-sm font-mono rounded hover:text-aged transition-colors">
-              {t('ui.clear')}
+              onClick={() => setActiveTab('query')}
+              className={[
+                'px-4 py-1.5 text-[10px] font-mono uppercase tracking-wider border transition-colors',
+                activeTab === 'query'
+                  ? 'bg-surface border-gold border-b-0 text-gold'
+                  : 'bg-ink border-border text-shadow hover:text-aged',
+              ].join(' ')}
+            >
+              {t('ui.evidence_query')}
+            </button>
+            {/* SchemaViewer owns its open/close state internally; its button sits in the tab row */}
+            <div className="ml-1">
+              <SchemaViewer />
+            </div>
+            <button
+              onClick={() => setActiveTab('notes')}
+              className={[
+                'ml-1 px-4 py-1.5 text-[10px] font-mono uppercase tracking-wider border transition-colors',
+                activeTab === 'notes'
+                  ? 'bg-surface border-gold border-b-0 text-gold'
+                  : 'bg-ink border-border text-shadow hover:text-aged',
+              ].join(' ')}
+            >
+              {t('ui.detective_notes')}
             </button>
           </div>
 
-          <ResultsTable columns={queryResult.columns} rows={queryResult.rows} />
+          {/* Tab content */}
+          {activeTab === 'query' && (
+            <div className="flex-1 flex flex-col overflow-hidden p-4 gap-3">
+              <div>
+                <div className="flex items-center gap-3 mb-1">
+                  <span className="text-xs text-gold-dim font-mono uppercase tracking-widest">{t('ui.level_label')} {level.num}</span>
+                  <span className="text-xs bg-dim text-shadow px-2 py-0.5 rounded font-mono">{level.badge}</span>
+                </div>
+                <h1 className="font-display text-xl text-paper">{level.title}</h1>
+                <p className="text-sm text-shadow font-mono mt-1">{level.objective}</p>
+              </div>
 
-          <div className="mt-auto">
-            <FeedbackBar
-              state={feedback}
-              onNext={isSolved && currentLevel < 10 ? handleNext : undefined}
-            />
-          </div>
+              <SQLEditor ref={editorRef} onRun={handleRun} />
+
+              <div className="flex gap-2">
+                <button onClick={handleRunButton}
+                  className="px-4 py-2 border-2 border-gold text-gold text-[10px] font-mono uppercase tracking-wider bg-ink hover:border-aged transition-colors">
+                  {t('ui.run_query')}
+                </button>
+                <button onClick={handleHint} disabled={hintsLeft(level.num) === 0}
+                  className="px-4 py-2 border-2 border-border text-shadow text-[10px] font-mono uppercase tracking-wider hover:border-shadow transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                  {t('ui.hint_with_count', { n: hintsLeft(level.num) })}
+                </button>
+                <button
+                  onClick={() => { setQueryResult({ columns: [], rows: [] }); setFeedback({ type: 'idle' }) }}
+                  className="px-4 py-2 border-2 border-border text-shadow text-[10px] font-mono uppercase tracking-wider hover:border-shadow transition-colors">
+                  {t('ui.clear')}
+                </button>
+              </div>
+
+              <ResultsTable columns={queryResult.columns} rows={queryResult.rows} />
+
+              <div className="mt-auto">
+                <FeedbackBar
+                  state={feedback}
+                  onNext={isSolved && currentLevel < 10 ? handleNext : undefined}
+                />
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'notes' && (
+            <div className="flex-1 overflow-hidden">
+              <DetectiveNotepad />
+            </div>
+          )}
         </main>
       </div>
 

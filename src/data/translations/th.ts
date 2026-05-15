@@ -57,6 +57,8 @@ export const th = {
     notes_placeholder: 'จดเบาะแส ผู้ต้องสงสัย เวลา...',
     notes_saved: 'บันทึกอัตโนมัติ',
     solve_1_more_level: 'ต้องไขคดีเพิ่มอีก 1 ระดับ',
+    evidence_query: 'สืบค้นหลักฐาน',
+    detective_notes: 'บันทึกนักสืบ',
   },
   levels: {
     1: {
