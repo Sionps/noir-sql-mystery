@@ -180,10 +180,10 @@ export default function GameClient() {
               disabled={!canAccuse()}
               onClick={() => setShowAccuse(true)}
               className={[
-                'w-full py-2 rounded font-display text-sm transition-all',
+                'w-full py-2 font-mono text-[10px] uppercase tracking-wider border-2 transition-colors',
                 canAccuse()
-                  ? 'bg-red text-paper hover:opacity-80 cursor-pointer'
-                  : 'bg-surface text-shadow border border-border cursor-not-allowed',
+                  ? 'border-red text-red bg-[#0a0300] hover:border-[#c02020] cursor-pointer'
+                  : 'border-border text-shadow bg-surface cursor-not-allowed opacity-50',
               ].join(' ')}>
               {canAccuse()
                 ? t('ui.make_accusation')
