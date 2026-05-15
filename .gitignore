@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# superpowers generated files
+.superpowers/
+docs/superpowers/
+public/mockups/
