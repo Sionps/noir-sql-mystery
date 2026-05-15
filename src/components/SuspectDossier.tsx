@@ -64,7 +64,7 @@ export default function SuspectDossier() {
   return (
     <>
       {/* Card row */}
-      <div className="flex flex-row gap-3 overflow-x-auto p-4 h-full items-stretch">
+      <div className="flex flex-row gap-3 overflow-x-auto p-4 h-full items-start">
         {SUSPECTS.map((s) => {
           const isAccused = accusationMade && accusedId === s.id
           const isGuilty  = isAccused && s.id === KILLER_ID
