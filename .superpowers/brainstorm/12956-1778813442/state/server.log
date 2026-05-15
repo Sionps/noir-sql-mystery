@@ -1,0 +1,6 @@
+{"type":"server-started","port":53101,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:53101","screen_dir":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/12956-1778813442/content","state_dir":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/12956-1778813442/state"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/12956-1778813442/content/design-direction.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/12956-1778813442/content/waiting-1.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/12956-1778813442/content/approaches.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/12956-1778813442/content/design-full.html"}
+{"type":"server-stopped","reason":"idle timeout"}

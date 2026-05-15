@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case File Redesign Mockups</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime&family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0a; color: #e5e5e5; font-family: 'Courier Prime', monospace; }
+        .font-typewriter { font-family: 'Special Elite', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Evidence Board Styles */
+        .corkboard { background: #3d2b1f; background-image: radial-gradient(#4d3b2f 1px, transparent 1px); background-size: 20px 20px; border: 15px solid #2a1d15; }
+        .polaroid { background: #fdfdfd; color: #333; padding: 10px 10px 30px 10px; box-shadow: 3px 3px 10px rgba(0,0,0,0.5); transform: rotate(-2deg); border-radius: 2px; }
+        .red-string { height: 2px; background: #b91c1c; box-shadow: 0 0 5px rgba(185, 28, 28, 0.5); position: relative; }
+        .red-string::after { content: ''; position: absolute; top: -3px; left: 0; right: 0; height: 2px; background: #ef4444; }
+
+        /* Dossier Styles */
+        .manila-folder { background: #e3c99a; color: #4a3728; box-shadow: inset 0 0 50px rgba(0,0,0,0.1); border-radius: 4px; }
+        .confidential-stamp { color: #b91c1c; border: 4px double #b91c1c; transform: rotate(-15deg); display: inline-block; padding: 2px 10px; font-weight: bold; opacity: 0.8; border-radius: 4px; }
+        .typewritten-page { background: #f5f5f0; color: #222; padding: 20px; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); border: 1px solid #ddd; }
+
+        /* Blueprint Styles */
+        .blueprint { background: #003366; color: #ffffff; border: 2px solid #ffffff; position: relative; overflow: hidden; }
+        .blueprint-grid { background-image: linear-gradient(#ffffff11 1px, transparent 1px), linear-gradient(90deg, #ffffff11 1px, transparent 1px); background-size: 20px 20px; }
+        .blueprint-table { border: 1px solid #ffffff; background: rgba(255,255,255,0.05); }
+
+        /* Noir Terminal Styles */
+        .crt-screen { background: #050505; color: #ffb000; border: 10px solid #222; box-shadow: inset 0 0 100px rgba(0,0,0,1), 0 0 20px rgba(255,176,0,0.2); }
+        .crt-text { text-shadow: 0 0 8px rgba(255,176,0,0.8); }
+        .ascii-border { border: 1px solid #ffb000; }
+    </style>
+</head>
+<body class="p-10">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-serif mb-4">Case File Redesign Concept</h1>
+            <p class="text-zinc-500">Compare the four visual directions for the Trigger Button and the Database Diagram.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- Option 1: Evidence Board -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">1. The Evidence Board</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                    <div class="mb-8">
+                        <p class="text-xs text-zinc-500 mb-2 uppercase">Trigger Button</p>
+                        <div class="relative inline-block">
+                            <div class="bg-yellow-100 text-black px-4 py-1 font-typewriter text-sm shadow-md transform -rotate-1 border-b-2 border-yellow-300 cursor-pointer hover:scale-105 transition-transform">
+                                📌 CASE FILE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="corkboard p-8 rounded-lg min-h-[300px] flex flex-col items-center justify-center gap-6">
+                        <div class="flex gap-8 items-start">
+                            <div class="polaroid w-32 text-xs font-typewriter">
+                                <strong class="block mb-2 border-b border-black/20">PERSONS</strong>
+                                id (PK)<br>name<br>role<br>room_no
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="red-string w-12"></div>
+                                <div class="text-[10px] text-red-600 font-bold rotate-45">LINKED</div>
+                            </div>
+                            <div class="polaroid w-32 text-xs font-typewriter" style="transform: rotate(3deg)">
+                                <strong class="block mb-2 border-b border-black/20">HOTEL_LOG</strong>
+                                id (PK)<br>person_id (FK)<br>event<br>floor
+                            </div>
+                        </div>
+                        <p class="text-white/40 text-[10px] font-mono italic">"Connected by red yarn, pinned to corkboard"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2: Police Dossier -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">2. The Police Dossier</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                    <div class="mb-8">
+                        <p class="text-xs text-zinc-500 mb-2 uppercase">Trigger Button</p>
+                        <div class="inline-block bg-[#e3c99a] text-[#4a3728] px-3 py-1 text-xs font-typewriter shadow-sm border-l-4 border-[#c4a77a] cursor-pointer hover:bg-[#d6b98a] transition-colors">
+                            FILE: 1947-S-01
+                        </div>
+                    </div>
+                    <div class="manila-folder p-6 rounded-lg min-h-[300px]">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="confidential-stamp font-typewriter text-xl">CONFIDENTIAL</div>
+                            <div class="text-right font-typewriter text-xs">Dept. of Justice<br>Case #402</div>
+                        </div>
+                        <div class="typewritten-page font-typewriter text-sm space-y-4">
+                            <div class="border-b border-black/10 pb-2">
+                                <strong class="underline">TABLE: persons</strong><br>
+                                <span class="text-xs italic opacity-70">Hotel guests and staff</span>
+                            </div>
+                            <div class="pl-4 text-xs space-y-1">
+                                <div>[X] id <span class="text-[10px] opacity-50">(Primary)</span></div>
+                                <div>[ ] name</div>
+                                <div>[ ] role</div>
+                            </div>
+                        </div>
+                        <p class="text-[#4a3728]/50 text-[10px] font-typewriter mt-4 italic text-center">"Typed reports in a manila folder"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 3: Architect's Blueprint -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">3. The Architect's Blueprint</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                    <div class="mb-8">
+                        <p class="text-xs text-zinc-500 mb-2 uppercase">Trigger Button</p>
+                        <div class="inline-block border border-white text-white px-4 py-1 text-xs font-mono uppercase tracking-widest hover:bg-white hover:text-[#003366] transition-all cursor-pointer">
+                            SCHEMA_MAP
+                        </div>
+                    </div>
+                    <div class="blueprint p-6 rounded-lg min-h-[300px] blueprint-grid flex items-center justify-center">
+                        <div class="relative flex gap-12">
+                            <div class="blueprint-table p-3 w-40 text-[10px] font-mono">
+                                <div class="border-b border-white/30 mb-2 font-bold uppercase">Persons</div>
+                                <div>id <span class="opacity-50">PK</span></div>
+                                <div>name</div>
+                                <div>role</div>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 w-12 h-px bg-white"></div>
+                            <div class="blueprint-table p-3 w-40 text-[10px] font-mono">
+                                <div class="border-b border-white/30 mb-2 font-bold uppercase">Hotel_Log</div>
+                                <div>id <span class="opacity-50">PK</span></div>
+                                <div>person_id <span class="opacity-50">FK</span></div>
+                                <div>event</div>
+                            </div>
+                        </div>
+                        <p class="absolute bottom-4 right-4 text-white/30 text-[10px] font-mono italic">"White ink on deep blue drafting paper"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 4: Noir Terminal -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">4. The Noir Terminal</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+                    <div class="mb-8">
+                        <p class="text-xs text-zinc-500 mb-2 uppercase">Trigger Button</p>
+                        <div class="inline-block bg-black text-[#ffb000] px-3 py-1 text-xs font-mono-tech border border-[#ffb000] shadow-[0_0_5px_#ffb000] cursor-pointer hover:bg-[#ffb000] hover:text-black transition-all">
+                            > run_schema.sh
+                        </div>
+                    </div>
+                    <div class="crt-screen p-6 rounded-lg min-h-[300px] font-mono-tech text-xs crt-text">
+                        <div class="mb-4 opacity-70">[ SYSTEM READY ] [ USER: DETECTIVE ]</div>
+                        <div class="ascii-border p-3">
+                            <div class="text-center font-bold mb-2 underline">--- TABLE: PERSONS ---</div>
+                            <div class="grid grid-cols-2 gap-x-4">
+                                <span>ID</span> <span class="text-right opacity-60">PRIMARY_KEY</span>
+                                <span>NAME</span> <span class="text-right opacity-60">VARCHAR(255)</span>
+                                <span>ROLE</span> <span class="text-right opacity-60">VARCHAR(50)</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 opacity-50 text-[10px] animate-pulse">_ blinking cursor</div>
+                        <p class="absolute bottom-4 right-4 text-amber-500/30 text-[10px] font-mono italic">"Phosphor glow on a black CRT screen"</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

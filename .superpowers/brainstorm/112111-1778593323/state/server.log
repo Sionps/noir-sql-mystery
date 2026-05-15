@@ -1,0 +1,7 @@
+{"type":"server-started","port":58741,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:58741","screen_dir":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/112111-1778593323/content","state_dir":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/112111-1778593323/state"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/112111-1778593323/content/schema-approaches.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/112111-1778593323/content/er-placement.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/112111-1778593323/content/er-modal-mockup.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/112111-1778593323/content/story-notes-options.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/112111-1778593323/content/final-design-mockup.html"}
+{"type":"server-stopped","reason":"owner process exited"}

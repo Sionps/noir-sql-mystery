@@ -9,8 +9,10 @@ interface GameState {
   hintsUsed: Record<number, number>
   accusationMade: boolean
   accusedId: number | null
+  language: 'en' | 'th'
   briefingLevel: number | null
   setLevel: (i: number) => void
+  setLanguage: (lang: 'en' | 'th') => void
   setBriefingLevel: (levelNum: number | null) => void
   solveLevel: (i: number) => void
   claimBonus: (i: number) => void
@@ -31,9 +33,11 @@ export const useGameStore = create<GameState>()(
       hintsUsed: {},
       accusationMade: false,
       accusedId: null,
+      language: 'th',
       briefingLevel: null,
 
       setLevel: (i) => set({ currentLevel: i }),
+      setLanguage: (lang) => set({ language: lang }),
       setBriefingLevel: (levelNum) => set({ briefingLevel: levelNum }),
 
       solveLevel: (i) => {
@@ -59,7 +63,8 @@ export const useGameStore = create<GameState>()(
       reset: () =>
         set({
           currentLevel: 1, solved: [], bonusClaimed: [],
-          xp: 0, hintsUsed: {}, accusationMade: false, accusedId: null, briefingLevel: null,
+          xp: 0, hintsUsed: {}, accusationMade: false, accusedId: null,
+          language: 'th', briefingLevel: null,
         }),
 
       hintsLeftForLevel: (levelNum) => 3 - (get().hintsUsed[levelNum] ?? 0),

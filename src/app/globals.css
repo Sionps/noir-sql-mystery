@@ -12,8 +12,8 @@
   --color-aged:     #d4c49a;
   --color-paper:    #f0e8d0;
 
-  --font-family-display: var(--font-special-elite), 'Georgia', var(--font-charmonman), serif;
-  --font-family-mono:    var(--font-courier-prime), 'Courier New', var(--font-charmonman), monospace;
+  --font-family-display: var(--font-special-elite), 'Georgia', 'Charmonman', serif;
+  --font-family-mono:    var(--font-courier-prime), 'Courier New', 'Charmonman', monospace;
 }
 
 :root {

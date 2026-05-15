@@ -1,0 +1,118 @@
+<h2>Suspect Dossier Card Style</h2>
+<p class="subtitle">Each suspect gets a card with a photo and personal info. Which style feels most like a detective movie?</p>
+
+<div class="cards">
+
+  <!-- Option A: Mugshot / Police record -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1208;padding:16px;font-family:'Courier New',monospace">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <!-- Photo -->
+        <div style="flex-shrink:0;width:72px">
+          <div style="width:72px;height:90px;background:#0f0c06;border:2px solid #2a2010;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+            <svg width="48" height="60" viewBox="0 0 48 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="24" cy="18" rx="12" ry="14" fill="#2a2010"/>
+              <ellipse cx="24" cy="52" rx="18" ry="14" fill="#2a2010"/>
+            </svg>
+            <div style="position:absolute;bottom:0;left:0;right:0;background:#c8922a;height:2px"></div>
+          </div>
+          <div style="background:#c8922a;color:#0f0c06;font-size:7px;text-align:center;padding:2px;font-weight:bold;letter-spacing:0.05em">HARLOW, D.</div>
+          <div style="background:#2a2010;color:#6a5030;font-size:6px;text-align:center;padding:1px;letter-spacing:0.05em">FILE #003-A · 1947</div>
+        </div>
+        <!-- Info -->
+        <div style="flex:1;color:#d4c49a;font-size:8px;line-height:1.8">
+          <div style="color:#c8922a;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;border-bottom:1px solid #2a2010;padding-bottom:3px">Diane Harlow</div>
+          <div><span style="color:#6a5030">ROLE&nbsp;&nbsp;&nbsp;&nbsp;</span>Singer, Velvet Room</div>
+          <div><span style="color:#6a5030">AGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>31</div>
+          <div><span style="color:#6a5030">HEIGHT&nbsp;&nbsp;</span>5'6"</div>
+          <div><span style="color:#6a5030">BUILD&nbsp;&nbsp;&nbsp;</span>Slender</div>
+          <div><span style="color:#6a5030">MOTIVE&nbsp;&nbsp;</span>$9,500 stolen</div>
+          <div style="margin-top:4px;border-top:1px solid #2a2010;padding-top:4px;color:#a09060;font-size:7px;font-style:italic">"Threatening message at 10 PM. Threatening message at 10 PM."</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Police mugshot file</h3>
+      <p>Horizontal layout: photo on the left with name plate, typed fields on the right. Feels like a 1940s police record.</p>
+    </div>
+  </div>
+
+  <!-- Option B: FBI Dossier vertical -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1208;padding:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;font-family:'Courier New',monospace">
+      <!-- Mini card -->
+      <div style="width:100px;background:#0f0c06;border:1px solid #2a2010;padding:8px;text-align:center">
+        <div style="width:56px;height:70px;background:#1a1208;border:1px solid #2a2010;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;position:relative">
+          <svg width="36" height="48" viewBox="0 0 36 48" fill="none">
+            <ellipse cx="18" cy="14" rx="9" ry="10" fill="#2a2010"/>
+            <ellipse cx="18" cy="40" rx="14" ry="11" fill="#2a2010"/>
+          </svg>
+          <!-- Grain overlay simulation -->
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 3px)"></div>
+        </div>
+        <div style="color:#c8922a;font-size:8px;font-weight:bold;margin-bottom:2px">Diane Harlow</div>
+        <div style="color:#6a5030;font-size:7px;margin-bottom:4px">Singer</div>
+        <div style="border-top:1px solid #2a2010;padding-top:4px;text-align:left">
+          <div style="color:#d4c49a;font-size:6.5px;line-height:1.9">
+            <div><span style="color:#7a5518">Age</span> 31</div>
+            <div><span style="color:#7a5518">Ht</span> 5'6"</div>
+            <div><span style="color:#7a5518">Hair</span> Black</div>
+            <div><span style="color:#7a5518">Eyes</span> Brown</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #2a2010;margin-top:4px;padding-top:3px">
+          <div style="border:1px solid #c8922a;color:#c8922a;font-size:6px;text-transform:uppercase;padding:1px 3px;display:inline-block">Suspect</div>
+        </div>
+      </div>
+      <!-- Second card peek -->
+      <div style="width:100px;background:#0f0c06;border:1px solid #2a2010;padding:8px;text-align:center;opacity:0.5">
+        <div style="width:56px;height:70px;background:#1a1208;border:1px solid #2a2010;margin:0 auto 6px;display:flex;align-items:center;justify-content:center">
+          <svg width="36" height="48" viewBox="0 0 36 48" fill="none">
+            <ellipse cx="18" cy="14" rx="9" ry="10" fill="#2a2010"/>
+            <ellipse cx="18" cy="40" rx="14" ry="11" fill="#2a2010"/>
+          </svg>
+        </div>
+        <div style="color:#c8922a;font-size:8px;font-weight:bold;margin-bottom:2px">Louis Krane</div>
+        <div style="color:#6a5030;font-size:7px">Manager</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Vertical ID card grid</h3>
+      <p>Portrait photo on top, name + role below, personal stats underneath. All 5 suspects shown in a grid. Click a card to expand details.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Pinboard dossier -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#2a1e0e;padding:16px;font-family:'Courier New',monospace">
+      <!-- Pinboard card -->
+      <div style="background:#f5edd0;padding:10px;transform:rotate(-1deg);box-shadow:3px 3px 8px rgba(0,0,0,0.5);color:#3a2a10;max-width:200px;margin:0 auto;position:relative">
+        <!-- Pin -->
+        <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:10px;height:10px;background:#c0392b;border-radius:50%"></div>
+        <!-- Photo area -->
+        <div style="width:70px;height:88px;background:#d0c8a8;border:1px solid #b0a888;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+          <svg width="44" height="56" viewBox="0 0 44 56" fill="none">
+            <ellipse cx="22" cy="17" rx="11" ry="13" fill="#8b7355"/>
+            <ellipse cx="22" cy="48" rx="17" ry="13" fill="#8b7355"/>
+          </svg>
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px)"></div>
+        </div>
+        <div style="font-size:8px;font-weight:bold;text-align:center;margin-bottom:2px;letter-spacing:0.05em">DIANE HARLOW</div>
+        <div style="font-size:7px;text-align:center;margin-bottom:6px;color:#6a5030">Singer · Velvet Room</div>
+        <div style="border-top:1px solid #c0b090;padding-top:5px;font-size:7px;line-height:1.8;color:#4a3820">
+          <div>Age: 31 · Ht: 5'6"</div>
+          <div>Hair: Black · Eyes: Brown</div>
+          <div style="margin-top:3px;font-style:italic;color:#6a4820;font-size:6.5px">Motive: $9,500 stolen from partnership</div>
+        </div>
+        <div style="text-align:center;margin-top:6px">
+          <div style="display:inline-block;border:1px solid #8b1a1a;color:#8b1a1a;font-size:6px;text-transform:uppercase;padding:1px 4px;letter-spacing:0.1em">Suspect</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Pinboard note card</h3>
+      <p>Aged paper card pinned to a cork board. Photo + hand-typed details. Slight rotation for character. Accused/guilty state changes the pin color and stamp.</p>
+    </div>
+  </div>
+
+</div>

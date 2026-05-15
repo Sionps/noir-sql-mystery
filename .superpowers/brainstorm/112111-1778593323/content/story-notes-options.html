@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Story + Notes Options</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #080604; color: #d4c49a; font-family: 'Courier New', monospace; padding: 24px; }
+
+h2 { color: #c8922a; font-size: 16px; letter-spacing: .08em; margin-bottom: 6px; }
+.subtitle { color: #6a5030; font-size: 12px; margin-bottom: 28px; }
+
+/* Option cards */
+.options { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 36px; }
+.option {
+  background: #0f0c06; border: 2px solid #2a2010; border-radius: 8px;
+  cursor: pointer; transition: border-color .2s;
+  overflow: hidden;
+}
+.option:hover { border-color: #7a5518; }
+.option.selected { border-color: #c8922a; }
+.option-preview { padding: 12px; border-bottom: 1px solid #2a2010; min-height: 320px; }
+.option-label { padding: 12px 14px; }
+.option-label h3 { color: #c8922a; font-size: 12px; margin-bottom: 4px; }
+.option-label p { color: #6a5030; font-size: 10px; line-height: 1.5; }
+.letter {
+  display: inline-block; background: #2a1e0e; color: #c8922a;
+  font-size: 10px; padding: 2px 7px; border-radius: 3px; margin-bottom: 8px;
+}
+
+/* ── SIDEBAR MOCKUP BASE ── */
+.sidebar {
+  background: #1a1208; border: 1px solid #2a2010; border-radius: 6px;
+  width: 100%; height: 100%; overflow: hidden; font-size: 10px;
+}
+.sb-section { border-bottom: 1px solid #2a2010; padding: 10px 12px; }
+.sb-label { color: #6a5030; font-size: 8px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 5px; }
+.sb-act { color: #6a5030; font-size: 8px; text-transform: uppercase; letter-spacing: .1em; }
+.sb-location { color: #7a5518; font-size: 8px; margin-bottom: 1px; }
+.sb-time { color: #6a5030; font-size: 8px; margin-bottom: 6px; }
+
+/* Option A styles - Story expand modal */
+.story-compact p { color: #d4c49a; font-size: 9px; line-height: 1.5; margin-bottom: 4px; }
+.story-compact blockquote { border-left: 2px solid #c8922a; padding-left: 6px; color: #f0e8d0; font-size: 9px; line-height: 1.5; font-style: italic; margin: 4px 0; }
+.read-more-btn {
+  margin-top: 6px; font-size: 8px; color: #c8922a; border: 1px solid #7a5518;
+  background: none; padding: 3px 8px; border-radius: 3px; cursor: pointer; font-family: monospace;
+}
+/* expand overlay */
+.story-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.85);
+  display: flex; align-items: center; justify-content: center; z-index: 99;
+  display: none;
+}
+.story-modal-box {
+  background: #1a1208; border: 1px solid #c8922a; border-radius: 8px;
+  max-width: 560px; width: 90%; padding: 24px;
+}
+.story-modal-box h2 { font-size: 18px; margin-bottom: 4px; }
+.story-modal-box .loc { color: #7a5518; font-size: 11px; margin-bottom: 2px; }
+.story-modal-box .time { color: #6a5030; font-size: 10px; margin-bottom: 16px; }
+.story-modal-box p { color: #d4c49a; font-size: 13px; line-height: 1.8; margin-bottom: 12px; }
+.story-modal-box blockquote {
+  border-left: 3px solid #c8922a; padding: 8px 12px; margin: 12px 0;
+  color: #f0e8d0; font-size: 13px; font-style: italic; line-height: 1.7;
+  background: #0f0c06;
+}
+.story-close { float: right; color: #6a5030; font-size: 12px; cursor: pointer; }
+
+/* Option B styles - Wider story, better typography inline */
+.story-big .act-badge {
+  display: inline-block; background: #2a1e0e; color: #7a5518;
+  font-size: 7px; text-transform: uppercase; letter-spacing: .12em; padding: 2px 6px; border-radius: 2px; margin-bottom: 6px;
+}
+.story-big h3 { color: #f0e8d0; font-size: 13px; font-family: serif; margin-bottom: 2px; }
+.story-big .meta { color: #6a5030; font-size: 8px; margin-bottom: 8px; }
+.story-big p { color: #d4c49a; font-size: 10px; line-height: 1.65; margin-bottom: 6px; }
+.story-big blockquote {
+  border-left: 2px solid #c8922a; padding: 5px 8px; margin: 6px 0;
+  background: #0f0c06; border-radius: 0 3px 3px 0;
+  color: #f0e8d0; font-size: 9.5px; line-height: 1.6; font-style: italic;
+}
+.story-big .objective-box {
+  background: #0f0c06; border: 1px solid #2a2010; border-radius: 4px;
+  padding: 6px 8px; margin-top: 6px;
+}
+.story-big .objective-box .obj-label { color: #7a5518; font-size: 7px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 3px; }
+.story-big .objective-box p { color: #d4c49a; font-size: 9px; margin-bottom: 0; }
+
+/* Option C - Notes/todo panel */
+.notes-area { background: #0f0c06; border: 1px solid #2a2010; border-radius: 4px; padding: 6px 8px; }
+.notes-label { color: #6a5030; font-size: 7px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 5px; }
+.note-item {
+  display: flex; align-items: flex-start; gap: 5px; margin-bottom: 4px;
+  font-size: 9px; color: #d4c49a; line-height: 1.4;
+}
+.note-check {
+  width: 10px; height: 10px; border: 1px solid #2a2010; border-radius: 2px;
+  flex-shrink: 0; margin-top: 1px; background: #1a1208;
+}
+.note-check.done { background: #2a1e0e; border-color: #7a5518; }
+.note-check.done::after { content: '✓'; color: #c8922a; font-size: 7px; display: block; line-height: 10px; text-align: center; }
+.note-text.done { color: #6a5030; text-decoration: line-through; }
+.note-input-row { display: flex; gap: 4px; margin-top: 5px; }
+.note-input {
+  flex: 1; background: #1a1208; border: 1px solid #2a2010; border-radius: 3px;
+  color: #d4c49a; font-family: monospace; font-size: 9px; padding: 3px 5px; outline: none;
+}
+.note-add-btn {
+  background: #2a1e0e; border: 1px solid #7a5518; color: #c8922a;
+  font-size: 9px; padding: 3px 6px; border-radius: 3px; cursor: pointer; font-family: monospace;
+}
+</style>
+</head>
+<body>
+
+<h2>Two improvements — pick a direction for each</h2>
+<p class="subtitle">Top row = Story readability · Bottom section = Detective's notepad</p>
+
+<!-- ── STORY OPTIONS ── -->
+<div style="color:#6a5030;font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">① Story — how should it read better?</div>
+<div class="options">
+
+  <!-- Option A: Compact in sidebar + expand modal -->
+  <div class="option" id="opt-a" onclick="pick('story', 'a', this)">
+    <div class="option-preview">
+      <div class="letter">A</div>
+      <div class="sidebar" style="height:270px">
+        <div class="sb-section" style="padding-bottom:8px">
+          <div class="sb-act">ACT I — THE GOLDFINCH HOTEL</div>
+          <div class="sb-location" style="margin-top:3px">Hotel Operator's Desk</div>
+          <div class="sb-time">1:30 AM, October 4, 1947</div>
+          <div class="story-compact">
+            <p>The hotel operator slid a handwritten log across the desk without being asked.</p>
+            <blockquote>"Calls to Mr. Malone's room, October third. I keep careful records, Mr. Cross."</blockquote>
+            <p style="color:#6a5030">JOIN phone_rec with persons to get caller names...</p>
+          </div>
+          <button class="read-more-btn" onclick="event.stopPropagation(); document.getElementById('story-modal').style.display='flex'">▤ Read full scene</button>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3>A — Compact + Expand</h3>
+      <p>Story is brief in the sidebar. A "Read full scene" button opens a focused reading modal with larger text and more atmosphere. Saves sidebar space.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Better inline typography -->
+  <div class="option" id="opt-b" onclick="pick('story', 'b', this)">
+    <div class="option-preview">
+      <div class="letter">B</div>
+      <div class="sidebar" style="height:270px">
+        <div class="sb-section">
+          <div class="story-big">
+            <div class="act-badge">ACT I · THE GOLDFINCH HOTEL</div>
+            <h3>The Call</h3>
+            <div class="meta">📍 Hotel Operator's Desk · 🕐 1:30 AM</div>
+            <p>The hotel operator — old Mrs. Finch, who knew everything about everyone — slid a handwritten log across the desk without being asked.</p>
+            <blockquote>"Calls to Mr. Malone's room, October third. I keep careful records, Mr. Cross."</blockquote>
+            <p>JOIN phone_rec with persons to get caller names — IDs alone will not close a case.</p>
+            <div class="objective-box">
+              <div class="obj-label">Your objective</div>
+              <p>JOIN phone_rec with persons WHERE called='Victor Malone'. Include caller names.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3>B — Better inline</h3>
+      <p>Level title as a heading, location/time as icons, NPC quotes styled with a background, objective box always visible. Everything in the sidebar but much more readable.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Split — story top bar -->
+  <div class="option" id="opt-c" onclick="pick('story', 'c', this)">
+    <div class="option-preview">
+      <div class="letter">C</div>
+      <div style="background:#0f0c06;border:1px solid #2a2010;border-radius:6px;overflow:hidden;height:270px;display:flex;flex-direction:column">
+        <!-- story as a top banner -->
+        <div style="background:#1a1208;border-bottom:1px solid #c8922a;padding:12px 16px;flex-shrink:0">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span style="color:#7a5518;font-size:8px;text-transform:uppercase;letter-spacing:.1em">ACT I · The Call</span>
+            <span style="color:#6a5030;font-size:8px">1:30 AM</span>
+          </div>
+          <p style="color:#d4c49a;font-size:10px;line-height:1.5;margin-bottom:6px">The hotel operator slid a handwritten log across the desk without being asked.</p>
+          <blockquote style="border-left:2px solid #c8922a;padding-left:8px;color:#f0e8d0;font-size:10px;font-style:italic;line-height:1.5">"Calls to Mr. Malone's room. I keep careful records, Mr. Cross."</blockquote>
+        </div>
+        <!-- SQL editor in main area -->
+        <div style="flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:8px">
+          <div style="color:#6a5030;font-size:8px;text-transform:uppercase;letter-spacing:.1em">Level 4 · JOIN · ON</div>
+          <div style="background:#050401;border:1px solid #2a2010;border-radius:4px;height:60px;padding:8px;color:#6a5030;font-size:8px">SELECT p.name, pr.duration…</div>
+          <div style="display:flex;gap:6px">
+            <div style="background:#c8922a;color:#1a1208;font-size:8px;padding:3px 8px;border-radius:3px">Run</div>
+            <div style="border:1px solid #2a2010;color:#6a5030;font-size:8px;padding:3px 8px;border-radius:3px">Hint</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3>C — Story as top panel</h3>
+      <p>Story moves above the SQL editor in the main area. The left sidebar becomes purely navigation (suspects, schema, notes). Bigger reading area for story.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── NOTES OPTIONS ── -->
+<div style="color:#6a5030;font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">② Detective's Notepad — how should it work?</div>
+<div class="options">
+
+  <!-- Notes Option 1: Free-text scratch pad -->
+  <div class="option" id="opt-n1" onclick="pick('notes', '1', this)">
+    <div class="option-preview">
+      <div class="letter">1</div>
+      <div class="sidebar" style="height:200px">
+        <div class="sb-section">
+          <div class="notes-label">🗒 Detective's Notes</div>
+          <textarea style="width:100%;height:110px;background:#0f0c06;border:1px solid #2a2010;border-radius:4px;color:#d4c49a;font-family:monospace;font-size:9px;padding:6px;resize:none;outline:none;line-height:1.6" placeholder="Jot down clues, suspects, anything you notice...">Diane Harlow called Malone at 22:45 for 2 min
+Left bar at 22:30 — unfinished gin martini
+Seen on floor 4 at 23:20
+Messages: "Have my money ready" — 22:00</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3>1 — Free notepad</h3>
+      <p>A plain textarea. Type anything. Saved to localStorage so notes persist across sessions. Simple and open-ended.</p>
+    </div>
+  </div>
+
+  <!-- Notes Option 2: Checklist/todo -->
+  <div class="option" id="opt-n2" onclick="pick('notes', '2', this)">
+    <div class="option-preview">
+      <div class="letter">2</div>
+      <div class="sidebar" style="height:200px">
+        <div class="sb-section">
+          <div class="notes-label">📋 Investigation Checklist</div>
+          <div class="notes-area">
+            <div class="note-item">
+              <div class="note-check done"></div>
+              <span class="note-text done">Check hotel_log for floor 4</span>
+            </div>
+            <div class="note-item">
+              <div class="note-check done"></div>
+              <span class="note-text done">Find Diane's bar tabs</span>
+            </div>
+            <div class="note-item">
+              <div class="note-check"></div>
+              <span class="note-text">JOIN messages with persons</span>
+            </div>
+            <div class="note-item">
+              <div class="note-check"></div>
+              <span class="note-text">Check alley_log timeline</span>
+            </div>
+            <div class="note-input-row">
+              <input class="note-input" placeholder="Add a task…" onclick="event.stopPropagation()"/>
+              <button class="note-add-btn" onclick="event.stopPropagation()">+ Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3>2 — Checklist</h3>
+      <p>Add tasks, check them off. Player writes what queries they still need to run. Checkbox tracks done vs. to-do. Saved to localStorage.</p>
+    </div>
+  </div>
+
+  <!-- Notes Option 3: Both - tabs -->
+  <div class="option" id="opt-n3" onclick="pick('notes', '3', this)">
+    <div class="option-preview">
+      <div class="letter">3</div>
+      <div class="sidebar" style="height:200px">
+        <div class="sb-section" style="padding-bottom:0">
+          <div style="display:flex;border-bottom:1px solid #2a2010;margin:0 -12px;padding:0 12px">
+            <div style="padding:4px 10px;font-size:8px;color:#c8922a;border-bottom:1px solid #c8922a;margin-bottom:-1px">📋 Tasks</div>
+            <div style="padding:4px 10px;font-size:8px;color:#6a5030">🗒 Notes</div>
+          </div>
+          <div style="padding-top:8px">
+            <div class="notes-area">
+              <div class="note-item">
+                <div class="note-check done"></div>
+                <span class="note-text done">Floor 4 after 23:00</span>
+              </div>
+              <div class="note-item">
+                <div class="note-check"></div>
+                <span class="note-text">JOIN messages → persons</span>
+              </div>
+              <div class="note-item">
+                <div class="note-check"></div>
+                <span class="note-text">Check alley_log 23:00–midnight</span>
+              </div>
+              <div class="note-input-row">
+                <input class="note-input" placeholder="Add task…" onclick="event.stopPropagation()"/>
+                <button class="note-add-btn" onclick="event.stopPropagation()">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="option-label">
+      <h3>3 — Tasks + Notes tabs</h3>
+      <p>Two tabs: a checklist for query tasks, a free-text notepad for observations. Switch between them. Both saved to localStorage.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Story expand modal (for Option A demo) -->
+<div id="story-modal" class="story-modal-overlay" onclick="this.style.display='none'">
+  <div class="story-modal-box" onclick="event.stopPropagation()">
+    <span class="story-close" onclick="document.getElementById('story-modal').style.display='none'">✕ close</span>
+    <div style="color:#6a5030;font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">ACT I — THE GOLDFINCH HOTEL</div>
+    <h2 style="color:#c8922a;font-family:serif;font-size:22px;margin-bottom:6px">The Call</h2>
+    <div class="loc">📍 Hotel Operator's Desk</div>
+    <div class="time" style="margin-bottom:16px">🕐 1:30 AM, October 4, 1947</div>
+    <p>The hotel operator — old Mrs. Finch, who knew everything about everyone — slid a handwritten log across the desk without being asked.</p>
+    <blockquote>"Calls to Mr. Malone's room, October third. I keep careful records, Mr. Cross."</blockquote>
+    <p>JOIN phone_rec with persons to get caller names — IDs alone will not close a case.</p>
+    <div style="background:#0f0c06;border:1px solid #2a2010;border-radius:4px;padding:10px;margin-top:8px">
+      <div style="color:#7a5518;font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Your Objective</div>
+      <p style="font-size:12px;margin-bottom:0">JOIN phone_rec with persons WHERE called='Victor Malone'. Include caller names.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:20px;color:#6a5030;font-size:10px">
+  Click options above to select · Click "Read full scene" on Option A to preview the modal
+</div>
+
+<script>
+const picks = {};
+function pick(group, val, el) {
+  // deselect others in group
+  document.querySelectorAll(`[id^="opt-${group === 'story' ? '' : 'n'}"]`).forEach(e => {
+    if (group === 'story' && (e.id === 'opt-a' || e.id === 'opt-b' || e.id === 'opt-c')) e.classList.remove('selected');
+    if (group === 'notes' && (e.id === 'opt-n1' || e.id === 'opt-n2' || e.id === 'opt-n3')) e.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  picks[group] = val;
+  // send to helper
+  if (window.recordChoice) window.recordChoice(group + '-' + val, el.querySelector('h3').textContent);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<h2>Where should the ER diagram appear?</h2>
+<p class="subtitle">The sidebar is too narrow for 10 tables — pick how it opens</p>
+
+<style>
+  .game-frame {
+    background: #0f0c06;
+    border: 1px solid #2a2010;
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    color: #d4c49a;
+    height: 200px;
+    position: relative;
+  }
+  .gf-header {
+    background: #1a1208;
+    border-bottom: 1px solid #2a2010;
+    padding: 4px 8px;
+    color: #c8922a;
+    font-size: 9px;
+  }
+  .gf-body { display: flex; height: calc(100% - 24px); }
+  .gf-sidebar {
+    width: 72px;
+    background: #1a1208;
+    border-right: 1px solid #2a2010;
+    padding: 6px;
+    flex-shrink: 0;
+  }
+  .gf-main { flex: 1; padding: 6px; }
+  .gf-btn {
+    background: #2a1e0e;
+    border: 1px solid #c8922a;
+    color: #c8922a;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 8px;
+    display: block;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .gf-sidebar-item {
+    color: #6a5030;
+    font-size: 8px;
+    margin-bottom: 3px;
+  }
+  /* Modal overlay */
+  .er-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  .er-modal-box {
+    background: #1a1208;
+    border: 1px solid #c8922a;
+    border-radius: 6px;
+    padding: 10px;
+    width: 80%;
+    max-height: 85%;
+    overflow: auto;
+  }
+  .er-modal-title {
+    color: #c8922a;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  /* Drawer */
+  .er-drawer {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 55%;
+    background: #1a1208;
+    border-right: 1px solid #c8922a;
+    z-index: 10;
+    padding: 8px;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.7);
+  }
+  /* Table node mini */
+  .er-node {
+    background: #0f0c06;
+    border: 1px solid #2a2010;
+    border-radius: 3px;
+    margin: 3px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .er-node-head {
+    background: #2a1e0e;
+    color: #c8922a;
+    padding: 2px 5px;
+    font-size: 7px;
+    text-transform: uppercase;
+  }
+  .er-node-body {
+    padding: 2px 5px;
+    color: #6a5030;
+    font-size: 7px;
+    line-height: 1.4;
+  }
+  .fk-col { color: #d4c49a; }
+</style>
+
+<div class="cards">
+
+  <!-- Option A: Modal overlay -->
+  <div class="card" data-choice="modal" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:10px">
+      <div class="game-frame">
+        <div class="gf-header">Dead on Arrival · Level 4 · XP: 300</div>
+        <div class="gf-body">
+          <div class="gf-sidebar" style="opacity:0.3">
+            <div class="gf-sidebar-item">Story...</div>
+            <div class="gf-btn">Schema ▤</div>
+            <div class="gf-sidebar-item">Suspects</div>
+          </div>
+          <div class="gf-main" style="opacity:0.3">
+            <div style="color:#6a5030;font-size:8px;">SQL Editor...</div>
+          </div>
+          <!-- Modal -->
+          <div class="er-modal-overlay">
+            <div class="er-modal-box">
+              <div class="er-modal-title">
+                <span>Database Schema — ER Diagram</span>
+                <span style="color:#6a5030;cursor:pointer">✕</span>
+              </div>
+              <svg width="100%" height="100" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="15" width="70" height="50" rx="2" fill="#0f0c06" stroke="#c8922a" stroke-width="1"/>
+                <rect x="5" y="15" width="70" height="12" rx="2" fill="#2a1e0e"/>
+                <text x="40" y="24" fill="#c8922a" font-size="6" font-family="monospace" text-anchor="middle">persons</text>
+                <text x="10" y="36" fill="#c8922a" font-size="5.5" font-family="monospace">🔑 id</text>
+                <text x="10" y="46" fill="#d4c49a" font-size="5.5" font-family="monospace">name, role</text>
+                <text x="10" y="56" fill="#6a5030" font-size="5.5" font-family="monospace">room_no, alibi</text>
+
+                <rect x="115" y="5" width="75" height="45" rx="2" fill="#0f0c06" stroke="#2a2010"/>
+                <rect x="115" y="5" width="75" height="12" rx="2" fill="#2a1e0e"/>
+                <text x="152" y="14" fill="#c8922a" font-size="6" font-family="monospace" text-anchor="middle">hotel_log</text>
+                <text x="120" y="26" fill="#c8922a" font-size="5.5" font-family="monospace">🔑 id</text>
+                <text x="120" y="36" fill="#d4c49a" font-size="5.5" font-family="monospace">→ person_id</text>
+                <text x="120" y="46" fill="#6a5030" font-size="5.5" font-family="monospace">event, floor…</text>
+
+                <rect x="115" y="58" width="75" height="40" rx="2" fill="#0f0c06" stroke="#2a2010"/>
+                <rect x="115" y="58" width="75" height="12" rx="2" fill="#2a1e0e"/>
+                <text x="152" y="67" fill="#c8922a" font-size="6" font-family="monospace" text-anchor="middle">financials</text>
+                <text x="120" y="79" fill="#c8922a" font-size="5.5" font-family="monospace">🔑 id</text>
+                <text x="120" y="89" fill="#d4c49a" font-size="5.5" font-family="monospace">→ person_id</text>
+
+                <rect x="225" y="5" width="70" height="45" rx="2" fill="#0f0c06" stroke="#2a2010"/>
+                <rect x="225" y="5" width="70" height="12" rx="2" fill="#2a1e0e"/>
+                <text x="260" y="14" fill="#c8922a" font-size="6" font-family="monospace" text-anchor="middle">phone_rec</text>
+                <text x="230" y="26" fill="#c8922a" font-size="5.5" font-family="monospace">🔑 id</text>
+                <text x="230" y="36" fill="#d4c49a" font-size="5.5" font-family="monospace">→ caller_id</text>
+                <text x="230" y="46" fill="#6a5030" font-size="5.5" font-family="monospace">called…</text>
+
+                <line x1="75" y1="38" x2="115" y2="25" stroke="#7a5518" stroke-width="1" stroke-dasharray="3,2"/>
+                <line x1="75" y1="42" x2="115" y2="75" stroke="#7a5518" stroke-width="1" stroke-dasharray="3,2"/>
+                <line x1="190" y1="22" x2="225" y2="22" stroke="#7a5518" stroke-width="1" stroke-dasharray="3,2"/>
+                <polygon points="115,25 109,22 109,28" fill="#7a5518"/>
+                <polygon points="115,75 109,72 109,78" fill="#7a5518"/>
+                <polygon points="225,22 219,19 219,25" fill="#7a5518"/>
+              </svg>
+              <div style="color:#6a5030;font-size:7px;margin-top:4px">+ 6 more tables • 🔑 primary key • → foreign key</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Full Modal</h3>
+      <p>Clicking "Schema" opens a centred overlay on top of the game. Closes with ✕ or Escape. More room for the diagram — all 10 tables fit comfortably.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Slide-out drawer -->
+  <div class="card" data-choice="drawer" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:10px">
+      <div class="game-frame">
+        <div class="gf-header">Dead on Arrival · Level 4 · XP: 300</div>
+        <div class="gf-body">
+          <div class="gf-sidebar" style="opacity:0.2;width:50px">
+            <div class="gf-btn">◀</div>
+          </div>
+          <div class="gf-main" style="opacity:0.2"></div>
+          <!-- Drawer -->
+          <div class="er-drawer">
+            <div style="color:#c8922a;font-size:8px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;display:flex;justify-content:space-between">
+              <span>ER Diagram</span><span style="color:#6a5030">▶ close</span>
+            </div>
+            <div>
+              <div class="er-node">
+                <div class="er-node-head">persons</div>
+                <div class="er-node-body"><span style="color:#c8922a">🔑 id</span><br/>name, role<br/><span style="color:#6a5030">room_no</span></div>
+              </div>
+              <div class="er-node">
+                <div class="er-node-head">hotel_log</div>
+                <div class="er-node-body"><span style="color:#c8922a">🔑 id</span><br/><span class="fk-col">→ person_id</span><br/><span style="color:#6a5030">event…</span></div>
+              </div>
+              <div class="er-node">
+                <div class="er-node-head">financials</div>
+                <div class="er-node-body"><span style="color:#c8922a">🔑 id</span><br/><span class="fk-col">→ person_id</span><br/><span style="color:#6a5030">memo…</span></div>
+              </div>
+              <div class="er-node">
+                <div class="er-node-head">evidence</div>
+                <div class="er-node-body"><span style="color:#c8922a">🔑 id</span><br/><span style="color:#6a5030">item, location</span><br/><span style="color:#6a5030">notes</span></div>
+              </div>
+              <div class="er-node">
+                <div class="er-node-head">messages</div>
+                <div class="er-node-body"><span style="color:#c8922a">🔑 id</span><br/><span class="fk-col">→ sender_id</span><br/><span style="color:#6a5030">body…</span></div>
+              </div>
+              <div class="er-node">
+                <div class="er-node-head">bar_tabs</div>
+                <div class="er-node-body"><span style="color:#c8922a">🔑 id</span><br/><span class="fk-col">→ person_id</span><br/><span style="color:#6a5030">drink…</span></div>
+              </div>
+            </div>
+            <div style="color:#6a5030;font-size:7px;margin-top:4px">+ 4 more • scroll to see all</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Slide-out Drawer</h3>
+      <p>Schema slides in from the left over the sidebar. Game stays visible on the right. Feels integrated — not a full interruption.</p>
+    </div>
+  </div>
+
+</div>

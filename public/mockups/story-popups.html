@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Briefing Mockups</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Playfair+Display:wght@700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0a; color: #e5e5e5; font-family: 'Courier Prime', monospace; }
+        .font-typewriter { font-family: 'Special Elite', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+        
+        .typewriter-text {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+
+        .paper-texture {
+            background-color: #fdfdfd;
+            background-image: url("https://www.transparenttextures.com/patterns/paper.png");
+            color: #222;
+        }
+    </style>
+</head>
+<body class="p-10">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-serif mb-4">Case Briefing Popups</h1>
+            <p class="text-zinc-500">Visual directions for the pre-level narrative sequence.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- Option 1: The Official Police Memo -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">1. The Official Police Memo</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800 flex items-center justify-center">
+                    <div class="paper-texture w-80 p-8 shadow-2xl transform rotate-1 relative">
+                        <div class="absolute top-4 right-4 border-2 border-red-600 text-red-600 px-2 py-1 font-bold uppercase text-xs rotate-12 opacity-80">
+                            Confidential
+                        </div>
+                        <div class="border-b border-black/20 mb-4 pb-2">
+                            <h3 class="font-serif text-lg font-bold uppercase tracking-tighter">Police Department: Case #402</h3>
+                            <p class="text-[10px] font-mono opacity-60">Date: Oct 14, 1947 | File: A-12</p>
+                        </div>
+                        <div class="font-typewriter text-sm space-y-4 leading-relaxed">
+                            <p class="opacity-90">The victim was found in the lobby. No forced entry. The guest list is our only lead.</p>
+                            <div class="bg-zinc-200 p-2 text-xs border-l-4 border-zinc-400 italic">
+                                "Check the persons table. Find who was in the hotel during the blackout."
+                            </div>
+                            <div class="pt-4">
+                                <span class="text-[10px] uppercase font-bold block mb-1">Objective:</span>
+                                <p class="text-sm font-bold underline">Identify all hotel guests.</p>
+                            </div>
+                        </div>
+                        <button class="mt-6 w-full bg-zinc-800 text-white py-2 text-xs font-mono uppercase tracking-widest hover:bg-black transition-colors">
+                            Accept Assignment
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2: The Detective's Scribbled Note -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">2. The Detective's Scribbled Note</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800 flex items-center justify-center">
+                    <div class="bg-[#fff9c4] w-80 p-6 shadow-xl transform -rotate-2 relative">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 bg-red-500 rounded-full shadow-sm"></div>
+                        <div class="font-typewriter text-sm text-[#5d4037] space-y-4">
+                            <p class="text-lg font-bold italic underline decoration-red-500">Note to self...</p>
+                            <p class="leading-relaxed">
+                                Something's not adding up about the phone records. Someone called the manager right before the scream.
+                            </p>
+                            <p class="font-bold">
+                                Check the <span class="bg-yellow-200 px-1">phone_rec</span> table. Look for the timestamp.
+                            </p>
+                            <div class="pt-6 flex justify-end">
+                                <button class="bg-[#5d4037] text-[#fff9c4] px-4 py-2 text-xs font-mono uppercase hover:bg-black transition-all shadow-md">
+                                    Start Digging
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 3: The Noir Typewriter (Cinematic) -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">3. The Cinematic Typewriter</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800 flex items-center justify-center">
+                    <div class="bg-black w-80 h-64 p-8 border-2 border-zinc-800 shadow-inner relative flex flex-col justify-center">
+                        <div class="absolute top-4 left-4 text-zinc-700 font-mono text-[10px]">SYSTEM: CASE_FILE_01</div>
+                        <div class="font-mono-tech text-amber-500 text-sm space-y-6">
+                            <div class="typewriter-text">The lights went out at 10:00 PM...</div>
+                            <div class="text-amber-200/60 text-xs italic">
+                                "Query the hotel_log to see who was moving in the dark."
+                            </div>
+                            <div class="pt-4 text-right">
+                                <button class="text-amber-500 border border-amber-500 px-3 py-1 text-[10px] uppercase hover:bg-amber-500 hover:text-black transition-all">
+                                    Enter Simulation &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 4: The Dossier Folder -->
+            <div class="flex flex-col gap-6">
+                <h2 class="text-xl font-bold text-zinc-300">4. The Dossier Folder</h2>
+                <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800 flex items-center justify-center">
+                    <div class="bg-[#e3c99a] w-80 p-4 shadow-lg transform rotate-1 relative">
+                        <div class="bg-[#f5f5f0] p-6 shadow-inner border border-black/10">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="text-xs font-mono text-zinc-400 uppercase">Exhibit A</span>
+                                <span class="text-red-600 font-bold text-xs border-2 border-red-600 px-1 rotate-12">Top Secret</span>
+                            </div>
+                            <div class="font-typewriter text-sm text-zinc-800 space-y-3">
+                                <p>The financial records show a massive payout to an unknown account.</p>
+                                <p class="font-bold underline">Objective: Trace the money in the financials table.</p>
+                            </div>
+                            <button class="mt-6 w-full bg-zinc-800 text-[#e3c99a] py-2 text-xs font-mono uppercase hover:bg-black transition-all shadow-md">
+                                Analyze Evidence
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

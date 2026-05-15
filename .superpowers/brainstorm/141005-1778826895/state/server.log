@@ -1,0 +1,7 @@
+{"type":"server-started","port":62475,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:62475","screen_dir":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/141005-1778826895/content","state_dir":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/141005-1778826895/state"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/141005-1778826895/content/suspect-placement.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/141005-1778826895/content/dossier-card-style.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/141005-1778826895/content/waiting-1.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/141005-1778826895/content/suspects-tab-mockup.html"}
+{"type":"screen-added","file":"/home/sion/noir-sql-mystery/.superpowers/brainstorm/141005-1778826895/content/suspects-tab-row.html"}
+{"type":"server-stopped","reason":"idle timeout"}

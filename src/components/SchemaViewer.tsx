@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
+import { useTranslation } from '@/hooks/useTranslation'
 
 interface Point { x: number; y: number; }
 
@@ -218,6 +219,7 @@ function RedYarn({ className }: { className?: string }) {
 }
 
 export default function SchemaViewer() {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [expandedTables, setExpandedTables] = useState<Set<string>>(new Set())
   const [connections, setConnections] = useState<{ from: Point; to: Point }[]>([])
@@ -298,7 +300,7 @@ export default function SchemaViewer() {
                    bg-[#fff9c4] text-[#5d4037] px-2 py-1 shadow-md -rotate-1
                    hover:scale-105 hover:rotate-0 border-b-2 border-yellow-400/50"
       >
-        Case File
+        {t('ui.case_file')}
       </button>
 
       {open && (
@@ -319,7 +321,7 @@ export default function SchemaViewer() {
           >
             <div className="flex items-center justify-between px-5 py-3 border-b border-[#2a1d15] bg-[#2a1d15]/30 flex-shrink-0">
               <span className="text-xs text-yellow-200/70 font-mono uppercase tracking-widest italic">
-                Evidence Board &mdash; Case #402
+                {t('ui.evidence_board')}
               </span>
               <button onClick={close} className="text-yellow-200/40 hover:text-yellow-200 font-mono text-sm transition-colors cursor-pointer">
                 &#x2715;
@@ -394,7 +396,7 @@ export default function SchemaViewer() {
                   <div className="w-px bg-border self-stretch" />
                   <div className="flex flex-col gap-12 min-w-[160px]">
                     <div className="text-[9px] text-shadow font-mono uppercase tracking-wider opacity-40 pb-1 text-center">
-                      Standalone
+                      {t('ui.standalone')}
                     </div>
                     {standaloneTables.map((t) => (
                       <TableCard
@@ -411,9 +413,9 @@ export default function SchemaViewer() {
             </div>
 
             <div className="flex gap-5 px-5 py-2.5 bg-[#2a1d15]/20 border-t border-[#2a1d15] text-[10px] font-serif italic text-yellow-200/40 flex-shrink-0">
-              <span><span className="text-red-600 font-bold">PK</span> primary key</span>
-              <span><span className="text-blue-600 font-bold">FK</span> foreign key</span>
-              <span className="ml-auto">Case Note: Click a polaroid to inspect details &rarr;</span>
+              <span><span className="text-red-600 font-bold">PK</span> {t('ui.pk_primary_key')}</span>
+              <span><span className="text-blue-600 font-bold">FK</span> {t('ui.fk_foreign_key')}</span>
+              <span className="ml-auto">{t('ui.case_note_click')}</span>
             </div>
           </div>
         </div>

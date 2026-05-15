@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>ER Modal Mockup</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0806; color: #d4c49a; font-family: 'Courier New', monospace; }
+
+/* Game shell behind modal */
+.game-shell {
+  display: flex; flex-direction: column; height: 100vh;
+  filter: blur(1px) brightness(0.4);
+  pointer-events: none;
+}
+.game-header {
+  background: #1a1208; border-bottom: 1px solid #2a2010;
+  padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: #c8922a;
+}
+.game-body { display: flex; flex: 1; overflow: hidden; }
+.game-sidebar {
+  width: 280px; background: #1a1208; border-right: 1px solid #2a2010;
+  padding: 16px; flex-shrink: 0;
+}
+.game-main { flex: 1; padding: 16px; background: #0f0c06; }
+.editor-box {
+  background: #050401; border: 1px solid #2a2010; border-radius: 4px;
+  height: 120px; margin-bottom: 12px;
+}
+.sidebar-section { color: #6a5030; font-size: 11px; margin-bottom: 8px; line-height: 1.5; }
+.schema-btn-placeholder {
+  background: #2a1e0e; border: 1px solid #c8922a; border-radius: 4px;
+  padding: 6px 10px; font-size: 10px; color: #c8922a; text-align: center;
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.88);
+}
+.modal-box {
+  background: #1a1208; border: 1px solid #2a2010;
+  border-radius: 8px; width: 90vw; max-width: 860px;
+  max-height: 88vh; display: flex; flex-direction: column;
+  box-shadow: 0 0 60px rgba(0,0,0,0.8);
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-bottom: 1px solid #2a2010; flex-shrink: 0;
+}
+.modal-title { color: #c8922a; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+.modal-close {
+  color: #6a5030; font-size: 16px; cursor: pointer; line-height: 1;
+  background: none; border: none; font-family: monospace;
+}
+.modal-close:hover { color: #d4c49a; }
+.modal-legend {
+  padding: 8px 20px; border-bottom: 1px solid #2a2010; flex-shrink: 0;
+  display: flex; gap: 20px; font-size: 10px;
+}
+.legend-item { display: flex; align-items: center; gap: 5px; color: #6a5030; }
+.legend-pk { color: #c8922a; }
+.legend-fk { color: #d4c49a; }
+.legend-line {
+  width: 24px; height: 1px; border-bottom: 1.5px dashed #7a5518;
+  position: relative;
+}
+.legend-line::after {
+  content: '▸'; position: absolute; right: -6px; top: -7px;
+  color: #7a5518; font-size: 10px;
+}
+.modal-body {
+  flex: 1; overflow: auto; padding: 20px;
+  display: flex; align-items: flex-start; justify-content: center;
+}
+
+/* ER diagram SVG */
+svg { font-family: 'Courier New', monospace; }
+
+/* Table node styles (for HTML overlay) */
+</style>
+</head>
+<body>
+
+<!-- Game behind -->
+<div class="game-shell">
+  <div class="game-header">
+    <span>Dead on Arrival</span>
+    <span style="color:#6a5030;font-size:11px">Room 403 · 1:30 AM · XP: 300</span>
+  </div>
+  <div class="game-body">
+    <div class="game-sidebar">
+      <div class="sidebar-section">ACT I — THE GOLDFINCH HOTEL</div>
+      <div class="sidebar-section">The hotel operator slid a handwritten log across the desk without being asked...</div>
+      <div class="schema-btn-placeholder">Table Schema ▤</div>
+      <div class="sidebar-section">Suspects ↓<br/>Louis Krane · Tommy Ricci<br/>Diane Harlow · Frank Dellum<br/>Nora Vance</div>
+    </div>
+    <div class="game-main">
+      <div class="editor-box"></div>
+      <div style="font-size:11px;color:#6a5030">Run Query · Hint (3 left) · Clear</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">Database Schema — Entity Relationship Diagram</span>
+      <button class="modal-close">✕ close</button>
+    </div>
+    <div class="modal-legend">
+      <div class="legend-item"><span class="legend-pk">🔑</span> primary key</div>
+      <div class="legend-item">
+        <span class="legend-line"></span>
+        <span class="legend-fk">→ foreign key relationship</span>
+      </div>
+      <div class="legend-item" style="color:#6a5030">· standalone column</div>
+    </div>
+    <div class="modal-body">
+      <svg width="800" height="480" viewBox="0 0 800 480">
+        <defs>
+          <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 z" fill="#7a5518"/>
+          </marker>
+        </defs>
+
+        <!-- ========= PERSONS (hub, left-center) ========= -->
+        <rect x="20" y="160" width="130" height="108" rx="4" fill="#0f0c06" stroke="#c8922a" stroke-width="1.5"/>
+        <rect x="20" y="160" width="130" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="20" y="176" width="130" height="4" fill="#2a1e0e"/>
+        <text x="85" y="174" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">persons</text>
+        <text x="32" y="196" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="32" y="210" fill="#d4c49a" font-size="9">name</text>
+        <text x="32" y="222" fill="#d4c49a" font-size="9">role</text>
+        <text x="32" y="234" fill="#6a5030" font-size="9">room_no</text>
+        <text x="32" y="246" fill="#6a5030" font-size="9">alibi</text>
+        <text x="32" y="258" fill="#6a5030" font-size="9">— victim (id=6)</text>
+
+        <!-- ========= HOTEL_LOG (top-right) ========= -->
+        <rect x="220" y="20" width="150" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="220" y="20" width="150" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="220" y="36" width="150" height="4" fill="#2a1e0e"/>
+        <text x="295" y="34" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">hotel_log</text>
+        <text x="232" y="56" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="232" y="70" fill="#d4c49a" font-size="9">→ person_id</text>
+        <text x="232" y="84" fill="#6a5030" font-size="9">event</text>
+        <text x="232" y="96" fill="#6a5030" font-size="9">floor</text>
+        <text x="232" y="108" fill="#6a5030" font-size="9">timestamp</text>
+
+        <!-- PERSONS → HOTEL_LOG -->
+        <line x1="150" y1="185" x2="220" y2="75" stroke="#7a5518" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+        <!-- ========= PHONE_REC (right, upper) ========= -->
+        <rect x="420" y="20" width="150" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="420" y="20" width="150" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="420" y="36" width="150" height="4" fill="#2a1e0e"/>
+        <text x="495" y="34" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">phone_rec</text>
+        <text x="432" y="56" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="432" y="70" fill="#d4c49a" font-size="9">→ caller_id</text>
+        <text x="432" y="84" fill="#6a5030" font-size="9">called</text>
+        <text x="432" y="96" fill="#6a5030" font-size="9">duration</text>
+        <text x="432" y="108" fill="#6a5030" font-size="9">timestamp</text>
+
+        <!-- PERSONS → PHONE_REC (via hotel_log relay line) -->
+        <line x1="150" y1="178" x2="420" y2="60" stroke="#7a5518" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+        <!-- ========= MESSAGES (right, mid-upper) ========= -->
+        <rect x="420" y="150" width="150" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="420" y="150" width="150" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="420" y="166" width="150" height="4" fill="#2a1e0e"/>
+        <text x="495" y="164" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">messages</text>
+        <text x="432" y="186" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="432" y="200" fill="#d4c49a" font-size="9">→ sender_id</text>
+        <text x="432" y="214" fill="#6a5030" font-size="9">recipient</text>
+        <text x="432" y="226" fill="#6a5030" font-size="9">body</text>
+        <text x="432" y="238" fill="#6a5030" font-size="9">sent_at</text>
+
+        <!-- PERSONS → MESSAGES -->
+        <line x1="150" y1="210" x2="420" y2="205" stroke="#7a5518" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+        <!-- ========= FINANCIALS (right, mid-lower) ========= -->
+        <rect x="420" y="280" width="150" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="420" y="280" width="150" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="420" y="296" width="150" height="4" fill="#2a1e0e"/>
+        <text x="495" y="294" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">financials</text>
+        <text x="432" y="316" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="432" y="330" fill="#d4c49a" font-size="9">→ person_id</text>
+        <text x="432" y="344" fill="#6a5030" font-size="9">memo</text>
+        <text x="432" y="358" fill="#6a5030" font-size="9">amount</text>
+        <text x="432" y="370" fill="#6a5030" font-size="9">date</text>
+
+        <!-- PERSONS → FINANCIALS -->
+        <line x1="150" y1="240" x2="420" y2="335" stroke="#7a5518" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+        <!-- ========= BAR_TABS (center-right, lower) ========= -->
+        <rect x="220" y="350" width="150" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="220" y="350" width="150" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="220" y="366" width="150" height="4" fill="#2a1e0e"/>
+        <text x="295" y="364" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">bar_tabs</text>
+        <text x="232" y="386" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="232" y="400" fill="#d4c49a" font-size="9">→ person_id</text>
+        <text x="232" y="414" fill="#6a5030" font-size="9">drink</text>
+        <text x="232" y="426" fill="#6a5030" font-size="9">tab_time</text>
+        <text x="232" y="438" fill="#6a5030" font-size="9">paid</text>
+
+        <!-- PERSONS → BAR_TABS -->
+        <line x1="100" y1="268" x2="260" y2="350" stroke="#7a5518" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+        <!-- ========= ALLEY_LOG (center, bottom) ========= -->
+        <rect x="20" y="360" width="150" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="20" y="360" width="150" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="20" y="376" width="150" height="4" fill="#2a1e0e"/>
+        <text x="95" y="374" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">alley_log</text>
+        <text x="32" y="396" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="32" y="410" fill="#d4c49a" font-size="9">→ person_id</text>
+        <text x="32" y="424" fill="#6a5030" font-size="9">seen_at</text>
+        <text x="32" y="436" fill="#6a5030" font-size="9">direction</text>
+        <text x="32" y="448" fill="#6a5030" font-size="9">notes</text>
+
+        <!-- PERSONS → ALLEY_LOG -->
+        <line x1="85" y1="268" x2="85" y2="360" stroke="#7a5518" stroke-width="1.2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+        <!-- ========= STANDALONE TABLES (far right) ========= -->
+        <!-- EVIDENCE -->
+        <rect x="620" y="20" width="165" height="96" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="620" y="20" width="165" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="620" y="36" width="165" height="4" fill="#2a1e0e"/>
+        <text x="702" y="34" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">evidence</text>
+        <text x="632" y="56" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="632" y="70" fill="#6a5030" font-size="9">item</text>
+        <text x="632" y="82" fill="#6a5030" font-size="9">location</text>
+        <text x="632" y="96" fill="#6a5030" font-size="9">notes</text>
+        <text x="632" y="110" fill="#3a3020" font-size="8" font-style="italic">no foreign keys</text>
+
+        <!-- WITNESSES -->
+        <rect x="620" y="150" width="165" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="620" y="150" width="165" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="620" y="166" width="165" height="4" fill="#2a1e0e"/>
+        <text x="702" y="164" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">witnesses</text>
+        <text x="632" y="186" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="632" y="200" fill="#6a5030" font-size="9">name</text>
+        <text x="632" y="212" fill="#6a5030" font-size="9">statement</text>
+        <text x="632" y="224" fill="#6a5030" font-size="9">credibility</text>
+        <text x="632" y="238" fill="#3a3020" font-size="8" font-style="italic">no foreign keys</text>
+
+        <!-- STAFF -->
+        <rect x="620" y="290" width="165" height="108" rx="4" fill="#0f0c06" stroke="#2a2010" stroke-width="1"/>
+        <rect x="620" y="290" width="165" height="20" rx="4" fill="#2a1e0e"/>
+        <rect x="620" y="306" width="165" height="4" fill="#2a1e0e"/>
+        <text x="702" y="304" fill="#c8922a" font-size="10" text-anchor="middle" font-weight="bold" letter-spacing="1">staff</text>
+        <text x="632" y="326" fill="#c8922a" font-size="9">🔑 id</text>
+        <text x="632" y="340" fill="#6a5030" font-size="9">name</text>
+        <text x="632" y="352" fill="#6a5030" font-size="9">shift</text>
+        <text x="632" y="364" fill="#6a5030" font-size="9">floor_access</text>
+        <text x="632" y="376" fill="#6a5030" font-size="9">notes</text>
+        <text x="632" y="390" fill="#3a3020" font-size="8" font-style="italic">no foreign keys</text>
+
+        <!-- Divider line separating standalone tables -->
+        <line x1="600" y1="20" x2="600" y2="460" stroke="#2a2010" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="596" y="15" fill="#3a3020" font-size="8" text-anchor="end">standalone →</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+// clicking the close button reloads to show game
+document.querySelector('.modal-close').addEventListener('click', () => {
+  document.querySelector('.modal-overlay').style.display = 'none';
+  document.querySelector('.game-shell').style.filter = 'none';
+  document.querySelector('.game-shell').style.pointerEvents = 'auto';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<h2>Which design direction feels right?</h2>
+<p class="subtitle">Three distinct looks for a more game-like noir experience. Click to select.</p>
+
+<div class="cards">
+
+  <!-- Option A: Case File / Detective Board -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#0a0705;padding:12px;font-family:'Courier New',monospace;border:1px solid #2a1e0e;min-height:200px;position:relative;overflow:hidden;">
+        <!-- Film grain overlay -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;"></div>
+        <!-- Header bar -->
+        <div style="background:#1a0f05;border-bottom:2px solid #c8922a;padding:6px 10px;margin:-12px -12px 8px -12px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="color:#c8922a;font-size:13px;letter-spacing:3px;text-transform:uppercase;">◆ DEAD ON ARRIVAL ◆</span>
+          <span style="color:#5a4020;font-size:10px;">CASE FILE #001</span>
+        </div>
+        <!-- Left sidebar — suspects pinned like a board -->
+        <div style="display:flex;gap:8px;">
+          <div style="width:90px;flex-shrink:0;">
+            <div style="color:#6a5030;font-size:8px;letter-spacing:2px;margin-bottom:4px;">SUSPECTS</div>
+            <div style="background:#120a04;border:1px dashed #3a2510;padding:4px 6px;margin-bottom:3px;color:#d4c49a;font-size:9px;position:relative;">
+              <span style="position:absolute;top:-3px;left:4px;color:#c8922a;font-size:8px;">📌</span>
+              Louis Krane<br/><span style="color:#5a4020;font-size:8px;">Manager</span>
+            </div>
+            <div style="background:#120a04;border:1px dashed #3a2510;padding:4px 6px;margin-bottom:3px;color:#d4c49a;font-size:9px;">
+              Tommy Ricci<br/><span style="color:#5a4020;font-size:8px;">Bellhop</span>
+            </div>
+            <div style="background:#8b1a1a22;border:1px solid #8b1a1a;padding:4px 6px;margin-bottom:3px;color:#e88;font-size:9px;">
+              Diane Harlow<br/><span style="color:#8b1a1a;font-size:8px;">★ ACCUSED</span>
+            </div>
+          </div>
+          <!-- Main area -->
+          <div style="flex:1;">
+            <div style="color:#6a5030;font-size:8px;letter-spacing:2px;margin-bottom:4px;">CASE BRIEFING — ACT I</div>
+            <div style="background:#120a04;border:1px solid #2a2010;padding:6px;margin-bottom:6px;">
+              <p style="color:#d4c49a;font-size:9px;margin:0;line-height:1.5;">"The hotel manager called it in at midnight. Body found in room 7. No signs of forced entry..."</p>
+            </div>
+            <!-- SQL Editor mockup -->
+            <div style="background:#080503;border:1px solid #2a2010;border-top:2px solid #c8922a;padding:5px;">
+              <div style="color:#5a4020;font-size:8px;margin-bottom:3px;">▶ QUERY THE EVIDENCE</div>
+              <div style="color:#c8922a;font-size:9px;font-family:'Courier New',monospace;">SELECT * FROM hotel_log</div>
+              <div style="color:#5a4020;font-size:9px;">WHERE floor = 7 AND timestamp > '22:00'</div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom ribbon -->
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#0a0705;border-top:1px solid #2a2010;padding:4px 10px;display:flex;justify-content:space-between;">
+          <span style="color:#5a4020;font-size:8px;">XP: 240</span>
+          <span style="color:#c8922a;font-size:8px;">⬛ ACCUSE</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Detective Board</h3>
+      <p>Pin-board aesthetic. Suspects feel like mugshots tacked to a corkboard. Evidence folders, dashed borders, gold accents. Gritty, tactile game feel.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Pulp Novel / Newspaper -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#0c0a07;padding:12px;font-family:'Times New Roman',serif;border:1px solid #3a2510;min-height:200px;position:relative;overflow:hidden;">
+        <!-- Aged paper texture via gradient -->
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at top left,#1a120822 0%,transparent 60%),radial-gradient(ellipse at bottom right,#2a180a15 0%,transparent 60%);pointer-events:none;"></div>
+        <!-- Masthead -->
+        <div style="text-align:center;border-bottom:3px double #c8922a;padding-bottom:6px;margin-bottom:8px;">
+          <div style="color:#c8922a;font-size:16px;letter-spacing:4px;font-weight:bold;text-transform:uppercase;">THE EVENING DISPATCH</div>
+          <div style="color:#5a4020;font-size:8px;letter-spacing:2px;">CASE FILE EDITION · LEVEL 1 OF 5</div>
+        </div>
+        <!-- Two-column newspaper layout -->
+        <div style="display:flex;gap:10px;">
+          <div style="flex:1;border-right:1px solid #2a2010;padding-right:8px;">
+            <div style="color:#c8922a;font-size:11px;font-weight:bold;margin-bottom:4px;font-variant:small-caps;">MURDER AT THE IMPERIAL</div>
+            <p style="color:#d4c49a;font-size:8px;line-height:1.6;margin:0 0 4px 0;">A body was discovered in room seven of the Imperial Hotel last night. The victim, identified as Rex Malone, showed no signs of struggle...</p>
+            <div style="background:#c8922a22;border-left:2px solid #c8922a;padding:3px 5px;margin-top:4px;">
+              <div style="color:#c8922a;font-size:8px;font-weight:bold;">OBJECTIVE</div>
+              <div style="color:#d4c49a;font-size:8px;">Find who accessed floor 7 after 10pm</div>
+            </div>
+          </div>
+          <div style="flex:1;">
+            <div style="color:#c8922a;font-size:9px;font-variant:small-caps;margin-bottom:4px;">PERSONS OF INTEREST</div>
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="border:1px solid #2a2010;padding:3px 5px;display:flex;gap:5px;align-items:center;">
+                <div style="width:18px;height:18px;background:#1a0f05;border:1px solid #3a2510;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#5a4020;">?</div>
+                <div><div style="color:#d4c49a;font-size:8px;">Louis Krane</div><div style="color:#5a4020;font-size:7px;">Hotel Manager</div></div>
+              </div>
+              <div style="border:1px solid #8b1a1a;padding:3px 5px;display:flex;gap:5px;align-items:center;background:#8b1a1a11;">
+                <div style="width:18px;height:18px;background:#8b1a1a33;border:1px solid #8b1a1a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#e88;">!</div>
+                <div><div style="color:#e88;font-size:8px;">Diane Harlow</div><div style="color:#8b1a1a;font-size:7px;">⚠ SUSPECT</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- SQL area -->
+        <div style="margin-top:8px;background:#080503;border:1px solid #2a2010;padding:5px;font-family:'Courier New',monospace;">
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px;">
+            <div style="width:6px;height:6px;background:#c8922a;border-radius:50%;"></div>
+            <span style="color:#5a4020;font-size:8px;letter-spacing:1px;">EVIDENCE QUERY</span>
+          </div>
+          <div style="color:#c8922a;font-size:9px;">SELECT name, alibi FROM persons</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Pulp Newspaper</h3>
+      <p>Vintage newspaper masthead, double-rule dividers, small-caps headlines. Case info laid out like a crime bulletin. Atmospheric and readable.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Terminal / Neo-Noir -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#050507;padding:12px;font-family:'Courier New',monospace;border:1px solid #1a1a2e;min-height:200px;position:relative;overflow:hidden;">
+        <!-- Scanline effect -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,255,100,0.02) 0px,rgba(0,255,100,0.02) 1px,transparent 1px,transparent 4px);pointer-events:none;"></div>
+        <!-- Terminal header -->
+        <div style="background:#0a0a12;border-bottom:1px solid #c8922a44;padding:5px 10px;margin:-12px -12px 8px -12px;display:flex;align-items:center;gap:6px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#8b1a1a;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#7a5518;"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#2a4a1a;"></div>
+          <span style="color:#c8922a88;font-size:9px;margin-left:4px;">DEAD_ON_ARRIVAL.exe — CASE #001</span>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <!-- Left: case data panel -->
+          <div style="width:100px;flex-shrink:0;border-right:1px solid #c8922a22;padding-right:8px;">
+            <div style="color:#c8922a;font-size:8px;margin-bottom:6px;">[SUSPECTS]</div>
+            <div style="margin-bottom:4px;">
+              <div style="color:#7a8a6a;font-size:8px;">▷ KRANE, L.</div>
+              <div style="color:#4a5a3a;font-size:7px;">STATUS: CLEAR</div>
+            </div>
+            <div style="margin-bottom:4px;">
+              <div style="color:#7a8a6a;font-size:8px;">▷ RICCI, T.</div>
+              <div style="color:#4a5a3a;font-size:7px;">STATUS: CLEAR</div>
+            </div>
+            <div style="margin-bottom:4px;">
+              <div style="color:#e88;font-size:8px;animation:none;">▶ HARLOW, D.</div>
+              <div style="color:#8b1a1a;font-size:7px;">STATUS: FLAGGED</div>
+            </div>
+            <div style="margin-top:8px;border-top:1px solid #c8922a22;padding-top:4px;">
+              <div style="color:#c8922a88;font-size:7px;">XP: 0240</div>
+              <div style="color:#c8922a88;font-size:7px;">LV: 01/05</div>
+            </div>
+          </div>
+          <!-- Right: main -->
+          <div style="flex:1;">
+            <div style="color:#c8922a;font-size:8px;margin-bottom:4px;">[CASE_BRIEF]</div>
+            <div style="color:#7a8a6a;font-size:8px;line-height:1.6;margin-bottom:6px;">
+              &gt; LOCATION: Imperial Hotel, Rm 7<br/>
+              &gt; TIME: 23:14<br/>
+              &gt; VICTIM: Rex Malone<br/>
+              &gt; QUERY the evidence to proceed...
+            </div>
+            <!-- SQL terminal -->
+            <div style="background:#030305;border:1px solid #c8922a44;padding:5px;">
+              <div style="color:#c8922a44;font-size:7px;margin-bottom:2px;">// EVIDENCE_DB v2.1</div>
+              <div style="color:#c8922a;font-size:9px;">$ SELECT * FROM hotel_log</div>
+              <div style="color:#7a8a6a;font-size:9px;">&nbsp;&nbsp;WHERE floor = 7</div>
+              <div style="color:#c8922a88;font-size:9px;">&nbsp;&nbsp;AND ts &gt; '22:00:00';</div>
+              <div style="color:#4a5a3a;font-size:8px;margin-top:3px;">[3 rows returned] ▮</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Neo-Noir Terminal</h3>
+      <p>CRT scanlines, terminal window chrome, monospace everything. Feels like hacking a noir crime database. More cyberpunk-adjacent, less classic 1940s.</p>
+    </div>
+  </div>
+
+</div>
