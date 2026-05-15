@@ -86,7 +86,7 @@ export default function DetectiveNotepad() {
       </div>
 
       {tab === 'tasks' && (
-        <div className="overflow-y-auto max-h-56 px-3 py-1">
+        <div className="overflow-y-auto flex-1 px-3 py-1">
           {visibleLevels.map((level) => {
             const isLocked = level.num > currentLevel
             const isSolved = solved.includes(level.num)
