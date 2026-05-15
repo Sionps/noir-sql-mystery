@@ -144,8 +144,11 @@ export default function GameClient() {
 
   return (
     <div className="h-screen flex flex-col bg-surface overflow-hidden">
-      <header className="flex items-center justify-between px-4 py-2 border-b border-border bg-ink">
-        <div className="font-display text-xl text-gold">{t('ui.game_title')}</div>
+      <header className="flex items-center justify-between px-4 py-2 border-b-2 border-gold bg-ink">
+        <div>
+          <div className="font-display text-xl text-gold">{t('ui.game_title')}</div>
+          <div className="font-mono text-[10px] text-shadow tracking-widest uppercase">A Detective&rsquo;s Case Files</div>
+        </div>
         <div className="flex items-center gap-4 text-xs font-mono">
           <button
             onClick={() => setLanguage(language === 'en' ? 'th' : 'en')}
