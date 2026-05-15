@@ -18,6 +18,7 @@ import ResultsTable from './ResultsTable'
 import FeedbackBar from './FeedbackBar'
 import SchemaViewer from './SchemaViewer'
 import SuspectList from './SuspectList'
+import SuspectDossier from './SuspectDossier'
 import BonusClue from './BonusClue'
 import AccuseModal from './AccuseModal'
 import VerdictModal from './VerdictModal'
@@ -48,7 +49,7 @@ export default function GameClient() {
   const rawLevel = LEVELS[currentLevel - 1]
   const level    = useLocalizedLevel(rawLevel)
 
-  const [activeTab, setActiveTab] = useState<'query' | 'notes'>('query')
+  const [activeTab, setActiveTab] = useState<'query' | 'suspects' | 'notes'>('query')
   const [sidebarWidth, setSidebarWidth] = useState(320)
   const isResizing = useRef(false)
 
@@ -220,6 +221,17 @@ export default function GameClient() {
               <SchemaViewer />
             </div>
             <button
+              onClick={() => setActiveTab('suspects')}
+              className={[
+                'ml-1 px-4 py-1.5 text-[10px] font-mono uppercase tracking-wider border transition-colors',
+                activeTab === 'suspects'
+                  ? 'bg-surface border-gold border-b-0 text-gold'
+                  : 'bg-ink border-border text-shadow hover:text-aged',
+              ].join(' ')}
+            >
+              {t('ui.suspects')}
+            </button>
+            <button
               onClick={() => setActiveTab('notes')}
               className={[
                 'ml-1 px-4 py-1.5 text-[10px] font-mono uppercase tracking-wider border transition-colors',
@@ -276,6 +288,12 @@ export default function GameClient() {
           {activeTab === 'notes' && (
             <div className="flex-1 overflow-hidden">
               <DetectiveNotepad />
+            </div>
+          )}
+
+          {activeTab === 'suspects' && (
+            <div className="flex-1 overflow-hidden">
+              <SuspectDossier />
             </div>
           )}
         </main>
