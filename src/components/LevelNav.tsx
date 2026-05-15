@@ -11,9 +11,10 @@ export default function LevelNav() {
   const { t } = useTranslation()
   const localizedLevels = useLocalizedLevels()
 
+  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X']
+
   return (
-    <div className="flex items-center gap-1">
-      <span className="text-xs text-shadow font-mono mr-2 uppercase tracking-widest">{t('ui.case_file')}</span>
+    <div className="flex items-end gap-0.5">
       {localizedLevels.map((level) => {
         const isSolved = solved.includes(level.num)
         const isActive = currentLevel === level.num
@@ -23,15 +24,15 @@ export default function LevelNav() {
             title={`${t('ui.level_label')} ${level.num}: ${level.title}`}
             onClick={() => setBriefingLevel(level.num)}
             className={[
-              'w-7 h-7 rounded-full text-xs font-mono transition-all border',
+              'px-3 py-1 text-[10px] font-mono uppercase tracking-wider border transition-colors',
               isActive
-                ? 'bg-gold text-ink border-gold font-bold scale-110'
+                ? 'bg-ink border-gold border-b-0 text-gold'
                 : isSolved
-                ? 'bg-dim text-gold border-gold-dim'
-                : 'bg-surface text-shadow border-border hover:border-shadow',
+                ? 'bg-surface border-border text-shadow opacity-50 hover:opacity-75'
+                : 'bg-surface border-border text-shadow hover:text-aged hover:border-shadow',
             ].join(' ')}
           >
-            {isSolved ? '✓' : level.num}
+            {isSolved ? '✓' : `Case ${ROMAN[level.num - 1]}`}
           </button>
         )
       })}
