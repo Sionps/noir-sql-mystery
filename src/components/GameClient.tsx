@@ -17,7 +17,6 @@ import SQLEditor from './SQLEditor'
 import ResultsTable from './ResultsTable'
 import FeedbackBar from './FeedbackBar'
 import SchemaViewer from './SchemaViewer'
-import SuspectList from './SuspectList'
 import SuspectDossier from './SuspectDossier'
 import BonusClue from './BonusClue'
 import AccuseModal from './AccuseModal'
@@ -176,7 +175,6 @@ export default function GameClient() {
         >
           <StoryPanel level={level} />
           <BonusClue level={level} />
-          <SuspectList />
           <div className="mt-auto p-4 border-t border-border">
             <button
               disabled={!canAccuse()}
