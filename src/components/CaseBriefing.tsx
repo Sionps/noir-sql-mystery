@@ -34,8 +34,6 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
 
   if (!rawLevel) return null
 
-  const narrativeHook = level.story[0]?.text || ''
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300"
@@ -50,7 +48,6 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-red-600 rounded-full shadow-sm z-10" />
 
         <div className="bg-[#fff9c4] text-[#5d4037] font-serif p-8 md:p-12 shadow-2xl transform -rotate-2 relative overflow-hidden border border-[#e6dec4] animate-float">
-          {/* Paper texture/subtle lines could go here, but keeping it clean as per requirements */}
           <div className="space-y-8">
             <div className="space-y-2">
               {/* Stamps */}
@@ -71,20 +68,21 @@ export const CaseBriefing: React.FC<CaseBriefingProps> = ({ levelNum }) => {
               </h2>
             </div>
 
-            <div className="space-y-6">
-              <p className="italic leading-relaxed text-lg">
-                "{narrativeHook}"
-              </p>
-
-              <div className="pt-6 border-t border-[#dccf9e]">
-                <span className="text-xs uppercase tracking-wider font-mono opacity-70 block mb-2">{t('ui.objective')}</span>
-                <p className="font-bold text-lg">
-                  {level.objective}
-                </p>
-              </div>
+            <div className="space-y-4">
+              {level.story.map((block, i) =>
+                block.type === 'npc' ? (
+                  <p key={i} className="italic leading-relaxed text-base pl-4 border-l-2 border-[#c8a84b] text-[#6b4c2a]">
+                    {block.text}
+                  </p>
+                ) : (
+                  <p key={i} className="leading-relaxed text-base">
+                    {block.text}
+                  </p>
+                )
+              )}
             </div>
 
-            <div className="pt-10 flex justify-center">
+            <div className="pt-8 flex justify-center">
               <button
                 ref={buttonRef}
                 onClick={() => {
