@@ -137,7 +137,7 @@ export default function SuspectDossier() {
             onClick={() => setSelectedId(null)}
           >
             <div
-              className={`relative max-w-2xl w-full border-2 ${c.cardBorder} ${c.cardBg} flex gap-6 p-6 shadow-2xl`}
+              className={`relative max-w-3xl w-full border-2 ${c.cardBorder} ${c.cardBg} flex gap-6 p-6 shadow-2xl max-h-[88vh]`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close */}
@@ -159,7 +159,7 @@ export default function SuspectDossier() {
               </div>
 
               {/* Info column */}
-              <div className="flex-1 flex flex-col gap-4 min-w-0">
+              <div className="flex-1 flex flex-col gap-4 min-w-0 overflow-y-auto">
                 {/* Header */}
                 <div className="flex items-start justify-between gap-2">
                   <div>
@@ -201,6 +201,40 @@ export default function SuspectDossier() {
                   <p className={`font-mono text-sm italic leading-relaxed ${c.alibiColor.split(' ')[0]}`}>
                     "{t(s.alibiKey)}"
                   </p>
+                </div>
+
+                <div className={`border-t ${c.nameBorder}`} />
+
+                {/* Backstory */}
+                <div>
+                  <div className={`font-mono text-[9px] uppercase tracking-widest mb-1.5 ${c.labelColor}`}>
+                    {t('ui.field_backstory')}
+                  </div>
+                  <p className={`font-mono text-sm leading-relaxed ${c.textColor}`}>{t(s.backstoryKey)}</p>
+                </div>
+
+                {/* Motive */}
+                <div>
+                  <div className={`font-mono text-[9px] uppercase tracking-widest mb-1.5 ${c.labelColor}`}>
+                    {t('ui.field_motive')}
+                  </div>
+                  <p className={`font-mono text-sm leading-relaxed ${c.textColor}`}>{t(s.motiveKey)}</p>
+                </div>
+
+                {/* Connection */}
+                <div>
+                  <div className={`font-mono text-[9px] uppercase tracking-widest mb-1.5 ${c.labelColor}`}>
+                    {t('ui.field_relation')}
+                  </div>
+                  <p className={`font-mono text-sm leading-relaxed ${c.textColor}`}>{t(s.relationKey)}</p>
+                </div>
+
+                {/* Record */}
+                <div className="pb-1">
+                  <div className={`font-mono text-[9px] uppercase tracking-widest mb-1.5 ${c.labelColor}`}>
+                    {t('ui.field_record')}
+                  </div>
+                  <p className={`font-mono text-sm leading-relaxed ${c.textColor}`}>{t(s.recordKey)}</p>
                 </div>
               </div>
             </div>
