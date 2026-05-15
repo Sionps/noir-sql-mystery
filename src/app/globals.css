@@ -12,8 +12,8 @@
   --color-aged:     #d4c49a;
   --color-paper:    #f0e8d0;
 
-  --font-family-display: var(--font-special-elite), 'Georgia', serif;
-  --font-family-mono:    var(--font-courier-prime), 'Courier New', monospace;
+  --font-family-display: var(--font-special-elite), 'Georgia', var(--font-trirong), serif;
+  --font-family-mono:    var(--font-courier-prime), 'Courier New', var(--font-trirong), monospace;
 }
 
 :root {
