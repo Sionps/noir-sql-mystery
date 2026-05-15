@@ -65,6 +65,8 @@ export const th = {
     field_hair: 'ผม',
     field_eyes: 'ตา',
     field_alibi: 'ข้ออ้าง',
+    stamp_guilty:  'มีความผิด',
+    stamp_accused: 'ผู้ต้องสงสัย',
   },
   levels: {
     1: {

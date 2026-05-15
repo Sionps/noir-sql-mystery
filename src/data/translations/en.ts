@@ -65,6 +65,8 @@ export const en = {
     field_hair:  'HAIR',
     field_eyes:  'EYES',
     field_alibi: 'ALIBI',
+    stamp_guilty:  'Guilty',
+    stamp_accused: 'Accused',
   },
   levels: {},
   suspects: {

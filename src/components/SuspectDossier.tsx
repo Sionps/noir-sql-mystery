@@ -46,12 +46,12 @@ export default function SuspectDossier() {
             {/* Status stamp */}
             {isGuilty && (
               <div className="absolute top-1.5 right-1.5 border border-gold text-gold font-mono text-[6px] uppercase tracking-wider px-1 py-0.5 bg-ink z-10">
-                Guilty
+                {t('ui.stamp_guilty')}
               </div>
             )}
             {isAccused && !isGuilty && (
               <div className="absolute top-1.5 right-1.5 border border-red text-red font-mono text-[6px] uppercase tracking-wider px-1 py-0.5 bg-[#200808] z-10">
-                Accused
+                {t('ui.stamp_accused')}
               </div>
             )}
 
