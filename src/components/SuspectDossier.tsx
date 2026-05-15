@@ -81,40 +81,40 @@ export default function SuspectDossier() {
             <div
               key={s.id}
               onClick={() => setSelectedId(s.id)}
-              className={`flex-shrink-0 w-44 border ${c.cardBorder} ${c.cardBg} p-2.5 relative flex flex-col cursor-pointer hover:brightness-110 transition-all`}
+              className={`flex-shrink-0 w-64 border ${c.cardBorder} ${c.cardBg} p-3 relative flex flex-col cursor-pointer hover:brightness-110 transition-all`}
             >
               {isGuilty && (
-                <div className="absolute top-1.5 right-1.5 border border-gold text-gold font-mono text-[6px] uppercase tracking-wider px-1 py-0.5 bg-ink z-10">
+                <div className="absolute top-2 right-2 border border-gold text-gold font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 bg-ink z-10">
                   {t('ui.stamp_guilty')}
                 </div>
               )}
               {isAccused && !isGuilty && (
-                <div className="absolute top-1.5 right-1.5 border border-red text-red font-mono text-[6px] uppercase tracking-wider px-1 py-0.5 bg-[#200808] z-10">
+                <div className="absolute top-2 right-2 border border-red text-red font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 bg-[#200808] z-10">
                   {t('ui.stamp_accused')}
                 </div>
               )}
 
               <SuspectPhoto id={s.id} name={t(s.nameKey)} photoBg={c.photoBg} photoBorder={c.photoBorder} silFill={c.silFill} />
 
-              <div className={`font-mono text-[6px] text-center py-1 px-1 uppercase tracking-wider ${c.plateBg}`}>{s.plate}</div>
-              <div className={`font-mono text-[6px] text-center py-0.5 border border-t-0 mb-2 ${c.fileNumCls}`}>
+              <div className={`font-mono text-[9px] text-center py-1.5 px-1 uppercase tracking-wider ${c.plateBg}`}>{s.plate}</div>
+              <div className={`font-mono text-[8px] text-center py-1 border border-t-0 mb-2 ${c.fileNumCls}`}>
                 #{String(s.id).padStart(3, '0')}-A
               </div>
 
-              <div className={`font-mono text-[9px] uppercase tracking-wider pb-1 mb-1 border-b ${c.nameColor} ${c.nameBorder}`}>
+              <div className={`font-mono text-xs uppercase tracking-wider pb-1.5 mb-1.5 border-b ${c.nameColor} ${c.nameBorder}`}>
                 {t(s.nameKey)}
               </div>
 
-              <div className={`font-mono text-[7px] leading-loose flex-1 ${c.textColor}`}>
+              <div className={`font-mono text-[9px] leading-loose flex-1 ${c.textColor}`}>
                 {fields.map(([label, value]) => (
-                  <div key={label} className="flex gap-1">
+                  <div key={label} className="flex gap-1.5">
                     <span className={`flex-shrink-0 ${c.labelColor}`}>{label}</span>
                     <span>{value}</span>
                   </div>
                 ))}
               </div>
 
-              <div className={`mt-2 pt-2 border-t font-mono text-[6.5px] italic leading-relaxed ${c.alibiColor}`}>
+              <div className={`mt-2 pt-2 border-t font-mono text-[8px] italic leading-relaxed ${c.alibiColor}`}>
                 {t(s.alibiKey)}
               </div>
             </div>
