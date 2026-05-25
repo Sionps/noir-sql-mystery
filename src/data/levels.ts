@@ -40,7 +40,7 @@ export const LEVELS: Level[] = [
       },
     ],
     objective:
-      "Pull the complete guest and staff manifest. Query the persons table.",
+      "I need to see every name in this building. Give me the full manifest — guests and staff.",
     validate: (rows, cols) => rows.length === 6 && cols.length >= 4 && cols.some(c => c.toLowerCase() === 'role'),
     hints: [
       "Use SELECT to retrieve records from a table.",
@@ -50,7 +50,7 @@ export const LEVELS: Level[] = [
     success:
       "Six names on the manifest. Five suspects. One victim. The investigation begins.",
     bonus_prompt:
-      "Sort the manifest alphabetically by name to see who rises to the top.",
+      "Arrange the names alphabetically — see who sits at the top of the list.",
     bonus_validate: (rows) =>
       rows.length >= 5 && rows[0].some((v: any) => v === "Diane Harlow"),
     bonus_clue:
@@ -74,11 +74,11 @@ export const LEVELS: Level[] = [
       },
       {
         type: "p",
-        text: "Filter hotel_log for floor 4 after 23:00. Someone was up there when Malone was dying.",
+        text: "See who was on floor 4 after 23:00. Someone was up there when Malone was dying.",
       },
     ],
     objective:
-      "Find everyone logged on floor 4 after 23:00. Query hotel_log with WHERE and AND.",
+      "Someone was on floor 4 after 11 PM. Show me who was logged up there.",
     validate: (rows) =>
       rows.length === 3 &&
       rows.some(r => r.includes(2) || r.includes('Tommy Ricci')) &&
@@ -91,7 +91,7 @@ export const LEVELS: Level[] = [
     success:
       "Three entries. The singer appeared twice. The bellhop once. Someone was outside Room 403 at the right time.",
     bonus_prompt:
-      "JOIN hotel_log with persons to show names instead of person IDs.",
+      "Match the hotel log entries to names, not just ID numbers.",
     bonus_validate: (rows, cols) =>
       rows.length >= 2 &&
       cols.some(c => c.toLowerCase() === 'name') &&
@@ -118,11 +118,11 @@ export const LEVELS: Level[] = [
       },
       {
         type: "p",
-        text: "Search the evidence table notes for what she left behind.",
+        text: "Check the evidence for what she left behind.",
       },
     ],
     objective:
-      "Search evidence notes for 'lipstick' or 'perfume' using LIKE and OR.",
+      "Check the evidence notes for lipstick or perfume. She left something behind in that room.",
     validate: (rows) =>
       rows.length === 2 &&
       rows.some(r => r.some((v: any) => typeof v === 'string' && v.toLowerCase().includes('lipstick'))) &&
@@ -135,7 +135,7 @@ export const LEVELS: Level[] = [
     success:
       "Two pieces of evidence. A cigarette with crimson lipstick. A half-empty Chanel No. 5. Both pointing the same direction.",
     bonus_prompt:
-      "Find all evidence items from the crime scene — location contains '403'.",
+      "Pull every piece of evidence tied to the crime scene — anything from that room.",
     bonus_validate: (rows) =>
       rows.length >= 4 &&
       rows.every(r => r.some((v: any) => typeof v === 'string' && v.includes('403'))),
@@ -160,11 +160,11 @@ export const LEVELS: Level[] = [
       },
       {
         type: "p",
-        text: "JOIN phone_rec with persons to get caller names — IDs alone will not close a case.",
+        text: "Match the phone records to names — IDs alone will not close a case.",
       },
     ],
     objective:
-      "JOIN phone_rec with persons WHERE called='Victor Malone'. Include caller names.",
+      "Malone got phone calls that night. Pull the records — I need names, not just IDs.",
     validate: (rows, cols) =>
       rows.length === 3 &&
       cols.some(c => c.toLowerCase() === 'name') &&
@@ -176,7 +176,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Three calls to Malone's room. The singer called twice. The longest call lasted two full minutes.",
-    bonus_prompt: "Sort callers by duration DESC to reveal who talked longest.",
+    bonus_prompt: "Rank the callers by how long they talked — who stayed on the line the longest?",
     bonus_validate: (rows, cols) =>
       rows.length === 3 &&
       cols.some((c) => c.toLowerCase() === "name") &&
@@ -202,11 +202,11 @@ export const LEVELS: Level[] = [
       },
       {
         type: "p",
-        text: "Filter bar_tabs for person_id 3 and order by tab_time.",
+        text: "Find Diane's bar tabs and line them up by time.",
       },
     ],
     objective:
-      "Find Diane Harlow's bar tabs (person_id=3), ordered by tab_time.",
+      "Diane was at the bar all evening. Show me her tabs, in order.",
     validate: (rows) =>
       rows.length === 3 &&
       rows.some(r => r.includes('gin martini')) &&
@@ -218,7 +218,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Three drinks. Last order at 22:30. She left the bar — and someone on the 4th floor was about to have a very bad night.",
-    bonus_prompt: "Count how many drinks Diane ordered using COUNT(*).",
+    bonus_prompt: "How many drinks did Diane order that night? Count them up.",
     bonus_validate: (rows) =>
       rows.length === 1 && rows[0].some((v: any) => v === 3),
     bonus_clue:
@@ -240,9 +240,9 @@ export const LEVELS: Level[] = [
         type: "npc",
         text: '"You want the ones with nothing to hide, Mr. Cross. Check the scores."',
       },
-      { type: "p", text: "Filter witnesses for credibility of 8 or higher." },
+      { type: "p", text: "Look at the witnesses with credibility of 8 or higher." },
     ],
-    objective: "Filter witnesses table for credibility >= 8.",
+    objective: "Only the reliable witnesses matter. Show me credibility scores of 8 or higher.",
     validate: (rows, cols) =>
       rows.length === 3 &&
       cols.some(c => c.toLowerCase() === 'credibility') &&
@@ -255,7 +255,7 @@ export const LEVELS: Level[] = [
     success:
       "Three credible witnesses. All three saw the same woman. The elevator operator and the hotel clerk both scored 9 out of 10.",
     bonus_prompt:
-      "Find only the highest-credibility witnesses — credibility equals exactly 9.",
+      "Only the most credible witnesses will do. Show me the ones who scored a perfect 9.",
     bonus_validate: (rows) =>
       rows.length === 2 && rows.every((r) => r.some((v: any) => v === 9)),
     bonus_clue:
@@ -279,11 +279,11 @@ export const LEVELS: Level[] = [
       },
       {
         type: "p",
-        text: "JOIN messages with persons for sender names. Filter for Victor Malone's messages.",
+        text: "Match the messages to names. Pull everything sent to Victor Malone.",
       },
     ],
     objective:
-      "JOIN messages with persons for sender names. WHERE recipient='Victor Malone'. ORDER BY sent_at.",
+      "Someone slipped notes under Malone's door. Show me every message sent to his room — and who sent them.",
     validate: (rows, cols) =>
       rows.length === 5 &&
       cols.some(c => c.toLowerCase() === 'name') &&
@@ -295,7 +295,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Five messages delivered to Malone's room. Two from the singer. One announced her arrival time.",
-    bonus_prompt: "Show only messages sent at or after 21:00.",
+    bonus_prompt: "Show only messages sent after 9 PM.",
     bonus_validate: (rows) =>
       rows.length === 2 &&
       rows.some((r) => r.some((v: any) => v === "Diane Harlow")),
@@ -320,10 +320,10 @@ export const LEVELS: Level[] = [
       },
       {
         type: "p",
-        text: "JOIN the alley_log with persons for names. ORDER BY seen_at. Build the timeline.",
+        text: "Match the alley log to names. Line them up by time. Build the timeline.",
       },
     ],
-    objective: "JOIN alley_log with persons for names. ORDER BY seen_at.",
+    objective: "People were coming and going through the back alley. Match those log entries to names, ordered by time.",
     validate: (rows, cols) =>
       rows.length === 5 &&
       cols.some(c => c.toLowerCase() === 'name') &&
@@ -335,7 +335,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Five people passed through that alley. At 23:28, a woman was seen heading north — hurrying, coat pulled tight.",
-    bonus_prompt: "Find everyone seen in the alley between 23:00 and 23:59.",
+    bonus_prompt: "Find everyone spotted in the alley between 23:00 and midnight.",
     bonus_validate: (rows) =>
       rows.length === 3 &&
       rows.some(r => r.includes(3) || r.includes('Diane Harlow')) &&
@@ -357,14 +357,14 @@ export const LEVELS: Level[] = [
       },
       {
         type: "npc",
-        text: '"Check the staff table, Mr. Cross. Floor access and key notes. That is how she got in."',
+        text: '"Check the staff records, Mr. Cross. Floor access and key notes. That is how she got in."',
       },
       {
         type: "p",
-        text: "Find staff with floor_access of 4 or higher whose notes mention a key.",
+        text: "Find anyone on staff who could reach the fourth floor and had a key.",
       },
     ],
-    objective: "Find staff with floor_access >= 4 AND notes LIKE '%key%'.",
+    objective: "The killer had access to floor 4. Check staff records — anyone with high floor access and notes about a key.",
     validate: (rows) =>
       rows.length === 3 &&
       rows.every(r => r.some((v: any) => typeof v === 'string' && v.toLowerCase().includes('key'))),
@@ -376,7 +376,7 @@ export const LEVELS: Level[] = [
     success:
       "Three staff members had the means. One reported a missing key on October 3rd — the night of the murder.",
     bonus_prompt:
-      "Find only the staff member with full master key access (floor_access = 5).",
+      "Find the one person on staff with a master key that opens every door.",
     bonus_validate: (rows) =>
       rows.length === 1 && rows[0].some((v: any) => v === 5),
     bonus_clue:
@@ -403,7 +403,7 @@ export const LEVELS: Level[] = [
         text: '"You read a ledger the right way, Mr. Cross — start at the top and work down. Sort it largest to smallest."',
       },
     ],
-    objective: "Sort all financials by amount DESC — the largest transaction rises to the top.",
+    objective: "Show me the money. Every transaction through the hotel books — biggest ones first.",
     validate: (rows) =>
       rows.length === 8 &&
       rows[0].some((v: any) => v === 9500),
@@ -414,7 +414,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Nine thousand five hundred dollars at the top. Victor Malone received it on October first — three days before his death.",
-    bonus_prompt: "Flip it: ORDER BY amount ASC to see who lost the most. The deepest negative rises to the top.",
+    bonus_prompt: "Flip it — show me who lost the most. The biggest debt should surface first.",
     bonus_validate: (rows) =>
       rows.length === 8 &&
       rows[0].some((v: any) => v === -9500),
@@ -443,7 +443,7 @@ export const LEVELS: Level[] = [
       },
     ],
     objective:
-      "GROUP BY person_id, SUM(amount) WHERE amount<0, ORDER BY total ASC.",
+      "Someone lost a lot of money. Total up every negative transaction by person — who lost the most?",
     validate: (rows) =>
       rows.length === 2 &&
       (rows[0].some((v: any) => v === 3 || v === "Diane Harlow") ||
@@ -456,7 +456,7 @@ export const LEVELS: Level[] = [
     success:
       "Nine thousand, five hundred dollars. Victor Malone stole it from Diane Harlow's club earnings. She came to collect. He refused.",
     bonus_prompt:
-      "JOIN financials with persons to reveal names alongside the totals.",
+      "Match the financial records to names. I want names alongside those totals.",
     bonus_validate: (rows) =>
       rows.length === 2 && rows[0].some((v: any) => v === "Diane Harlow"),
     bonus_clue:
@@ -480,10 +480,10 @@ export const LEVELS: Level[] = [
       },
       {
         type: "npc",
-        text: '"The log doesn\'t lie, Mr. Cross. Filter it tight — 23:00 to 23:30. Whoever\'s in there is your killer."',
+        text: '"The log doesn\'t lie, Mr. Cross. Narrow it down — 23:00 to 23:30. Whoever\'s in there is your killer."',
       },
     ],
-    objective: "Find all hotel_log events between '23:00' and '23:30' using BETWEEN.",
+    objective: "Malone died between 11 and 11:30. Show me every logged event in that half-hour window.",
     validate: (rows) =>
       rows.length === 4 &&
       rows.some(r => r.includes(3) || r.includes("Diane Harlow")) &&
@@ -495,7 +495,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Four events in the thirty-minute window. The singer, three times. The bellhop, once. Both present. Neither where they claimed to be.",
-    bonus_prompt: "Filter further — show only floor 4 events in that same window.",
+    bonus_prompt: "Narrow it down — just the floor 4 events in that same window.",
     bonus_validate: (rows) =>
       rows.length === 3 &&
       rows.every(r => r.includes(4)),
@@ -520,10 +520,10 @@ export const LEVELS: Level[] = [
       },
       {
         type: "npc",
-        text: '"Frequency tells you everything, Mr. Cross. Count the appearances. Group by person."',
+        text: '"Frequency tells you everything, Mr. Cross. Count the appearances — see who keeps showing up."',
       },
     ],
-    objective: "GROUP BY person_id and COUNT(*) appearances in hotel_log. ORDER BY count DESC.",
+    objective: "Count how many times each person appears in the hotel log. The busiest names rise to the top.",
     validate: (rows, cols) =>
       rows.length === 6 &&
       cols.some(c => /count|times|appear/i.test(c)) &&
@@ -535,7 +535,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Six entries — one per person. But one appeared three times. The singer who claimed she was performing until midnight.",
-    bonus_prompt: "JOIN with persons to show names alongside the counts.",
+    bonus_prompt: "Match the counts to names — I want to see who's who.",
     bonus_validate: (rows, cols) =>
       rows.length === 6 &&
       cols.some(c => c.toLowerCase() === "name") &&
@@ -557,14 +557,14 @@ export const LEVELS: Level[] = [
       },
       {
         type: "p",
-        text: "Filter down to only those who appeared more than once. HAVING lets you filter groups after they've been counted.",
+        text: "Narrow it down to only those who appeared more than once. You can pick from the groups after you've counted them.",
       },
       {
         type: "npc",
-        text: '"WHERE filters rows before grouping. HAVING filters groups after. Know the difference, Mr. Cross."',
+        text: '"Narrow it down first, then count. Know the difference, Mr. Cross."',
       },
     ],
-    objective: "GROUP BY person_id, COUNT(*) FROM hotel_log — HAVING COUNT(*) > 1. ORDER BY count DESC.",
+    objective: "Once could be coincidence. Twice is suspicious. Show me who appears more than once in the log.",
     validate: (rows) =>
       rows.length === 3 &&
       rows.every(r => r.some((v: any) => typeof v === "number" && v >= 2)) &&
@@ -576,7 +576,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Three people with more than one log entry. Diane Harlow at the top. The bellhop and the manager below her. All three had reason to be on that floor.",
-    bonus_prompt: "Narrow it further — HAVING COUNT(*) = 2 to find those with exactly two appearances.",
+    bonus_prompt: "Narrow it further — find the people with exactly two appearances.",
     bonus_validate: (rows) =>
       rows.length === 2 &&
       rows.every(r => r.some((v: any) => v === 2)),
@@ -604,7 +604,7 @@ export const LEVELS: Level[] = [
         text: '"You already know who did it, Mr. Cross. Run the numbers. Make it official."',
       },
     ],
-    objective: "JOIN hotel_log with persons to get names. GROUP BY name, COUNT(*) AS activity. ORDER BY activity DESC.",
+    objective: "Cross-reference everyone in the hotel log with their names. Count their movements and rank them.",
     validate: (rows, cols) =>
       rows.length === 6 &&
       cols.some(c => c.toLowerCase() === "name") &&
@@ -617,7 +617,7 @@ export const LEVELS: Level[] = [
     ],
     success:
       "Diane Harlow. Three movements — all after 23:00, all on the 4th floor, all pointing to room 403. The case is made.",
-    bonus_prompt: "Add HAVING COUNT(*) > 1 to show only those with multiple logged movements.",
+    bonus_prompt: "Filter to show only the ones with more than one logged movement.",
     bonus_validate: (rows, cols) =>
       rows.length === 3 &&
       cols.some(c => c.toLowerCase() === "name") &&
