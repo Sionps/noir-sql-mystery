@@ -56,10 +56,6 @@ export default function StoryPanel({ level }: Props) {
         <div className="space-y-2">
           {level.story.map((block, i) => <Block key={i} block={block} />)}
         </div>
-        <div className="border border-dashed border-border p-2 mt-1">
-          <div className="text-xs text-gold-dim uppercase tracking-widest font-mono mb-1">{t('ui.objective')}</div>
-          <p className="text-xs text-aged font-mono leading-relaxed">{level.objective}</p>
-        </div>
       </div>
     </div>
   )

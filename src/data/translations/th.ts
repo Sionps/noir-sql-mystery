@@ -2,7 +2,6 @@ export const th = {
   ui: {
     case_file: 'แฟ้มคดี',
     database_schema: 'ผังฐานข้อมูล',
-    objective: 'เป้าหมาย',
     hint: 'เบาะแส',
     hint_with_count: 'เบาะแส (เหลือ {n})',
     run_query: 'ขุดข้อมูล',

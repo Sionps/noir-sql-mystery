@@ -2,7 +2,6 @@ export const en = {
   ui: {
     case_file: 'Case File',
     database_schema: 'Database Schema',
-    objective: 'Objective',
     hint: 'Hint',
     hint_with_count: 'Hint ({n} left)',
     run_query: 'Run Query',
