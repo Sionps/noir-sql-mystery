@@ -128,7 +128,7 @@ export default function GameClient() {
   }, [level, useHint])
 
   const handleNext = useCallback(() => {
-    if (currentLevel < 10) setLevel(currentLevel + 1)
+    if (currentLevel < LEVELS.length) setLevel(currentLevel + 1)
   }, [currentLevel, setLevel])
 
   if (!dbReady) {
@@ -187,9 +187,9 @@ export default function GameClient() {
               ].join(' ')}>
               {canAccuse()
                 ? t('ui.make_accusation')
-                : (8 - solved.length) === 1
+                : (10 - solved.length) === 1
                   ? t('ui.solve_1_more_level')
-                  : t('ui.solve_x_more_levels', { x: 8 - solved.length })}
+                  : t('ui.solve_x_more_levels', { x: 10 - solved.length })}
             </button>
           </div>
         </aside>
@@ -278,7 +278,7 @@ export default function GameClient() {
               <div className="mt-auto">
                 <FeedbackBar
                   state={feedback}
-                  onNext={isSolved && currentLevel < 10 ? handleNext : undefined}
+                  onNext={isSolved && currentLevel < LEVELS.length ? handleNext : undefined}
                 />
               </div>
             </div>

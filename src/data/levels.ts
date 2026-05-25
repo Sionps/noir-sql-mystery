@@ -41,7 +41,7 @@ export const LEVELS: Level[] = [
     ],
     objective:
       "Pull the complete guest and staff manifest. Query the persons table.",
-    validate: (rows, cols) => rows.length === 6 && cols.length >= 4,
+    validate: (rows, cols) => rows.length === 6 && cols.length >= 4 && cols.some(c => c.toLowerCase() === 'role'),
     hints: [
       "Use SELECT to retrieve records from a table.",
       "The syntax is: SELECT * FROM table_name — the asterisk means all columns.",
@@ -79,7 +79,10 @@ export const LEVELS: Level[] = [
     ],
     objective:
       "Find everyone logged on floor 4 after 23:00. Query hotel_log with WHERE and AND.",
-    validate: (rows) => rows.length >= 2,
+    validate: (rows) =>
+      rows.length === 3 &&
+      rows.some(r => r.includes(2) || r.includes('Tommy Ricci')) &&
+      rows.some(r => r.includes(3) || r.includes('Diane Harlow')),
     hints: [
       "Use WHERE to filter rows. You need two conditions connected with AND.",
       "Chain conditions: WHERE floor=4 AND timestamp>'23:00'",
@@ -90,7 +93,10 @@ export const LEVELS: Level[] = [
     bonus_prompt:
       "JOIN hotel_log with persons to show names instead of person IDs.",
     bonus_validate: (rows, cols) =>
-      rows.length >= 2 && cols.some((c) => c.toLowerCase() === "name"),
+      rows.length >= 2 &&
+      cols.some(c => c.toLowerCase() === 'name') &&
+      rows.some(r => r.includes('Diane Harlow')) &&
+      rows.some(r => r.includes('Tommy Ricci')),
     bonus_clue:
       "Two people on the 4th floor after 23:00. Diane Harlow — and Tommy Ricci, who claims he was running an errand.",
   },
@@ -117,7 +123,10 @@ export const LEVELS: Level[] = [
     ],
     objective:
       "Search evidence notes for 'lipstick' or 'perfume' using LIKE and OR.",
-    validate: (rows) => rows.length === 2,
+    validate: (rows) =>
+      rows.length === 2 &&
+      rows.some(r => r.some((v: any) => typeof v === 'string' && v.toLowerCase().includes('lipstick'))) &&
+      rows.some(r => r.some((v: any) => typeof v === 'string' && v.toLowerCase().includes('perfume'))),
     hints: [
       "Use LIKE with % wildcards: notes LIKE '%word%'",
       "Use OR to match either condition: WHERE cond1 OR cond2",
@@ -127,7 +136,9 @@ export const LEVELS: Level[] = [
       "Two pieces of evidence. A cigarette with crimson lipstick. A half-empty Chanel No. 5. Both pointing the same direction.",
     bonus_prompt:
       "Find all evidence items from the crime scene — location contains '403'.",
-    bonus_validate: (rows) => rows.length >= 4,
+    bonus_validate: (rows) =>
+      rows.length >= 4 &&
+      rows.every(r => r.some((v: any) => typeof v === 'string' && v.includes('403'))),
     bonus_clue:
       "Five items from room 403. Three point unmistakably to a woman in evening dress — and that perfume is sold exclusively at Harlow's usual boutique.",
   },
@@ -155,7 +166,9 @@ export const LEVELS: Level[] = [
     objective:
       "JOIN phone_rec with persons WHERE called='Victor Malone'. Include caller names.",
     validate: (rows, cols) =>
-      rows.length === 3 && cols.some((c) => c.toLowerCase() === "name"),
+      rows.length === 3 &&
+      cols.some(c => c.toLowerCase() === 'name') &&
+      rows.some(r => r.includes('Diane Harlow')),
     hints: [
       "JOIN combines two tables on a matching column. phone_rec.caller_id matches persons.id",
       "Syntax: FROM phone_rec pr JOIN persons p ON pr.caller_id=p.id",
@@ -194,7 +207,10 @@ export const LEVELS: Level[] = [
     ],
     objective:
       "Find Diane Harlow's bar tabs (person_id=3), ordered by tab_time.",
-    validate: (rows) => rows.length === 3,
+    validate: (rows) =>
+      rows.length === 3 &&
+      rows.some(r => r.includes('gin martini')) &&
+      rows.some(r => r.includes('champagne')),
     hints: [
       "Filter for a specific person using WHERE person_id=3.",
       "Sort results chronologically using ORDER BY tab_time.",
@@ -227,7 +243,10 @@ export const LEVELS: Level[] = [
       { type: "p", text: "Filter witnesses for credibility of 8 or higher." },
     ],
     objective: "Filter witnesses table for credibility >= 8.",
-    validate: (rows) => rows.length === 3,
+    validate: (rows, cols) =>
+      rows.length === 3 &&
+      cols.some(c => c.toLowerCase() === 'credibility') &&
+      rows.every(r => r.some((v: any) => typeof v === 'number' && v >= 8)),
     hints: [
       "Use >= in WHERE for greater-than-or-equal comparison.",
       "Credibility is an integer column scored 1-10.",
@@ -266,7 +285,9 @@ export const LEVELS: Level[] = [
     objective:
       "JOIN messages with persons for sender names. WHERE recipient='Victor Malone'. ORDER BY sent_at.",
     validate: (rows, cols) =>
-      rows.length === 5 && cols.some((c) => c.toLowerCase() === "name"),
+      rows.length === 5 &&
+      cols.some(c => c.toLowerCase() === 'name') &&
+      rows.some(r => r.includes('Diane Harlow')),
     hints: [
       "JOIN messages m with persons p on m.sender_id=p.id to get names.",
       "Filter: WHERE m.recipient='Victor Malone'",
@@ -304,7 +325,9 @@ export const LEVELS: Level[] = [
     ],
     objective: "JOIN alley_log with persons for names. ORDER BY seen_at.",
     validate: (rows, cols) =>
-      rows.length === 5 && cols.some((c) => c.toLowerCase() === "name"),
+      rows.length === 5 &&
+      cols.some(c => c.toLowerCase() === 'name') &&
+      rows.some(r => r.includes('Diane Harlow')),
     hints: [
       "JOIN alley_log a with persons p on a.person_id=p.id.",
       "ORDER BY a.seen_at to build a chronological timeline.",
@@ -313,7 +336,10 @@ export const LEVELS: Level[] = [
     success:
       "Five people passed through that alley. At 23:28, a woman was seen heading north — hurrying, coat pulled tight.",
     bonus_prompt: "Find everyone seen in the alley between 23:00 and 23:59.",
-    bonus_validate: (rows) => rows.length === 3,
+    bonus_validate: (rows) =>
+      rows.length === 3 &&
+      rows.some(r => r.includes(3) || r.includes('Diane Harlow')) &&
+      rows.some(r => r.includes(4) || r.includes('Frank Dellum')),
     bonus_clue:
       "Three people in the alley during the murder hour. Diane at 23:28 heading north. Tommy at 23:35 looking nervous. Frank at 23:45 smoking.",
   },
@@ -339,7 +365,9 @@ export const LEVELS: Level[] = [
       },
     ],
     objective: "Find staff with floor_access >= 4 AND notes LIKE '%key%'.",
-    validate: (rows) => rows.length === 3,
+    validate: (rows) =>
+      rows.length === 3 &&
+      rows.every(r => r.some((v: any) => typeof v === 'string' && v.toLowerCase().includes('key'))),
     hints: [
       "Combine two WHERE conditions with AND.",
       "Use LIKE '%key%' to find rows where notes mention a key.",
@@ -356,6 +384,45 @@ export const LEVELS: Level[] = [
   },
   {
     num: 10,
+    act: "ACT III — THE BACK ALLEY",
+    title: "The Ledger",
+    location: "Hotel Accounting Office",
+    time: "4:15 AM, October 4, 1947",
+    badge: "ORDER BY · DESC",
+    story: [
+      {
+        type: "p",
+        text: "The accounting office was unlocked. The safe behind the desk stood open — not forced, but opened with a key. Ledger pages spread across the desk.",
+      },
+      {
+        type: "p",
+        text: "The financials table holds every transaction that moved through the Goldfinch. You need to see the biggest ones first.",
+      },
+      {
+        type: "npc",
+        text: '"You read a ledger the right way, Mr. Cross — start at the top and work down. Sort it largest to smallest."',
+      },
+    ],
+    objective: "Sort all financials by amount DESC — the largest transaction rises to the top.",
+    validate: (rows) =>
+      rows.length === 8 &&
+      rows[0].some((v: any) => v === 9500),
+    hints: [
+      "ORDER BY sorts your results. Place it at the end of the query, followed by a column name.",
+      "DESC means descending — largest value first. Without it, ORDER BY defaults to ASC (smallest first).",
+      "SELECT * FROM financials ORDER BY amount DESC",
+    ],
+    success:
+      "Nine thousand five hundred dollars at the top. Victor Malone received it on October first — three days before his death.",
+    bonus_prompt: "Flip it: ORDER BY amount ASC to see who lost the most. The deepest negative rises to the top.",
+    bonus_validate: (rows) =>
+      rows.length === 8 &&
+      rows[0].some((v: any) => v === -9500),
+    bonus_clue:
+      "Minus nine thousand five hundred. Diane Harlow's club earnings, taken as a management fee. She paid it. And she came to collect.",
+  },
+  {
+    num: 11,
     act: "ACT III — THE BACK ALLEY",
     title: "The Motive",
     location: "Hotel Accounting Office",
@@ -394,5 +461,168 @@ export const LEVELS: Level[] = [
       rows.length === 2 && rows[0].some((v: any) => v === "Diane Harlow"),
     bonus_clue:
       "Diane Harlow, person_id 3. Nine thousand five hundred dollars stolen from her share of the Velvet Room club earnings. Victor Malone called it a management fee. Diane called it theft. She was right.",
+  },
+  {
+    num: 12,
+    act: "ACT IV — THE VERDICT",
+    title: "The Hours",
+    location: "Hotel Detective's Office",
+    time: "5:00 AM, October 4, 1947",
+    badge: "WHERE · BETWEEN",
+    story: [
+      {
+        type: "p",
+        text: "The coroner put the time of death between eleven o'clock and half past. That narrows the window considerably.",
+      },
+      {
+        type: "p",
+        text: "You need every logged event during those thirty minutes. Who was moving through this hotel while Victor Malone was dying?",
+      },
+      {
+        type: "npc",
+        text: '"The log doesn\'t lie, Mr. Cross. Filter it tight — 23:00 to 23:30. Whoever\'s in there is your killer."',
+      },
+    ],
+    objective: "Find all hotel_log events between '23:00' and '23:30' using BETWEEN.",
+    validate: (rows) =>
+      rows.length === 4 &&
+      rows.some(r => r.includes(3) || r.includes("Diane Harlow")) &&
+      rows.some(r => r.includes(2) || r.includes("Tommy Ricci")),
+    hints: [
+      "BETWEEN filters for a range of values, inclusive on both ends.",
+      "Syntax: WHERE column BETWEEN value1 AND value2",
+      "SELECT * FROM hotel_log WHERE timestamp BETWEEN '23:00' AND '23:30'",
+    ],
+    success:
+      "Four events in the thirty-minute window. The singer, three times. The bellhop, once. Both present. Neither where they claimed to be.",
+    bonus_prompt: "Filter further — show only floor 4 events in that same window.",
+    bonus_validate: (rows) =>
+      rows.length === 3 &&
+      rows.every(r => r.includes(4)),
+    bonus_clue:
+      "Three events on the 4th floor between 23:00 and 23:30. Two belong to Diane Harlow. One to Tommy Ricci, who claims he was running an errand.",
+  },
+  {
+    num: 13,
+    act: "ACT IV — THE VERDICT",
+    title: "The Pattern",
+    location: "Hotel Detective's Office",
+    time: "5:15 AM, October 4, 1947",
+    badge: "GROUP BY · COUNT",
+    story: [
+      {
+        type: "p",
+        text: "You spread the hotel log across the desk and stared at it. Not individual entries — the pattern. Who kept appearing? Who kept moving?",
+      },
+      {
+        type: "p",
+        text: "Count how many times each person appears in the log. One name will stand out.",
+      },
+      {
+        type: "npc",
+        text: '"Frequency tells you everything, Mr. Cross. Count the appearances. Group by person."',
+      },
+    ],
+    objective: "GROUP BY person_id and COUNT(*) appearances in hotel_log. ORDER BY count DESC.",
+    validate: (rows, cols) =>
+      rows.length === 6 &&
+      cols.some(c => /count|times|appear/i.test(c)) &&
+      rows[0].some((v: any) => typeof v === "number" && v === 3),
+    hints: [
+      "GROUP BY groups rows by a column value. Combine with COUNT(*) to count rows per group.",
+      "Alias your count: COUNT(*) AS times. Then ORDER BY times DESC to rank highest first.",
+      "SELECT person_id, COUNT(*) AS times FROM hotel_log GROUP BY person_id ORDER BY times DESC",
+    ],
+    success:
+      "Six entries — one per person. But one appeared three times. The singer who claimed she was performing until midnight.",
+    bonus_prompt: "JOIN with persons to show names alongside the counts.",
+    bonus_validate: (rows, cols) =>
+      rows.length === 6 &&
+      cols.some(c => c.toLowerCase() === "name") &&
+      rows[0].includes("Diane Harlow"),
+    bonus_clue:
+      "Diane Harlow — three appearances, all on the 4th floor after 11 PM. Her alibi doesn't hold. It never did.",
+  },
+  {
+    num: 14,
+    act: "ACT IV — THE VERDICT",
+    title: "The Threshold",
+    location: "Hotel Detective's Office",
+    time: "5:30 AM, October 4, 1947",
+    badge: "GROUP BY · HAVING",
+    story: [
+      {
+        type: "p",
+        text: "One appearance in the log could be innocent. Twice means something. Three times means intent.",
+      },
+      {
+        type: "p",
+        text: "Filter down to only those who appeared more than once. HAVING lets you filter groups after they've been counted.",
+      },
+      {
+        type: "npc",
+        text: '"WHERE filters rows before grouping. HAVING filters groups after. Know the difference, Mr. Cross."',
+      },
+    ],
+    objective: "GROUP BY person_id, COUNT(*) FROM hotel_log — HAVING COUNT(*) > 1. ORDER BY count DESC.",
+    validate: (rows) =>
+      rows.length === 3 &&
+      rows.every(r => r.some((v: any) => typeof v === "number" && v >= 2)) &&
+      rows[0].some((v: any) => v === 3 || v === "Diane Harlow"),
+    hints: [
+      "HAVING filters grouped results. Unlike WHERE, it runs after GROUP BY.",
+      "Place HAVING after GROUP BY: GROUP BY person_id HAVING COUNT(*) > 1",
+      "SELECT person_id, COUNT(*) AS times FROM hotel_log GROUP BY person_id HAVING COUNT(*) > 1 ORDER BY times DESC",
+    ],
+    success:
+      "Three people with more than one log entry. Diane Harlow at the top. The bellhop and the manager below her. All three had reason to be on that floor.",
+    bonus_prompt: "Narrow it further — HAVING COUNT(*) = 2 to find those with exactly two appearances.",
+    bonus_validate: (rows) =>
+      rows.length === 2 &&
+      rows.every(r => r.some((v: any) => v === 2)),
+    bonus_clue:
+      "The bellhop and the manager — both logged exactly twice. Tommy reported a missing key. Louis's second appearance was logged at 00:15, after the body was found.",
+  },
+  {
+    num: 15,
+    act: "ACT IV — THE VERDICT",
+    title: "The Verdict",
+    location: "Hotel Detective's Office",
+    time: "6:00 AM, October 4, 1947",
+    badge: "JOIN · GROUP BY · COUNT",
+    story: [
+      {
+        type: "p",
+        text: "The sun was coming up over the lake. You had five hours of notes, a full hotel log, and a name that kept appearing in every corner of this case.",
+      },
+      {
+        type: "p",
+        text: "One last query. Cross-reference everyone in the hotel log with their names. Count their movements. Let the data make the case.",
+      },
+      {
+        type: "npc",
+        text: '"You already know who did it, Mr. Cross. Run the numbers. Make it official."',
+      },
+    ],
+    objective: "JOIN hotel_log with persons to get names. GROUP BY name, COUNT(*) AS activity. ORDER BY activity DESC.",
+    validate: (rows, cols) =>
+      rows.length === 6 &&
+      cols.some(c => c.toLowerCase() === "name") &&
+      rows[0].includes("Diane Harlow") &&
+      rows[0].some((v: any) => typeof v === "number" && v === 3),
+    hints: [
+      "JOIN hotel_log h with persons p ON h.person_id = p.id to get names.",
+      "Then GROUP BY p.name and COUNT(*) AS activity. ORDER BY activity DESC.",
+      "SELECT p.name, COUNT(*) AS activity FROM hotel_log h JOIN persons p ON h.person_id=p.id GROUP BY p.name ORDER BY activity DESC",
+    ],
+    success:
+      "Diane Harlow. Three movements — all after 23:00, all on the 4th floor, all pointing to room 403. The case is made.",
+    bonus_prompt: "Add HAVING COUNT(*) > 1 to show only those with multiple logged movements.",
+    bonus_validate: (rows, cols) =>
+      rows.length === 3 &&
+      cols.some(c => c.toLowerCase() === "name") &&
+      rows[0].includes("Diane Harlow"),
+    bonus_clue:
+      "Three people with more than one documented movement. Diane Harlow, Louis Krane, Tommy Ricci. Only one had the motive, the means, and nine thousand five hundred reasons.",
   },
 ];

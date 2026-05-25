@@ -68,7 +68,7 @@ export const useGameStore = create<GameState>()(
         }),
 
       hintsLeftForLevel: (levelNum) => 3 - (get().hintsUsed[levelNum] ?? 0),
-      canAccuse: () => get().solved.length >= 8,
+      canAccuse: () => get().solved.length >= 10,
     }),
     { name: 'noir-sql-v1' }
   )

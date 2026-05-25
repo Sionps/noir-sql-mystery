@@ -11,7 +11,7 @@ export default function LevelNav() {
   const { t } = useTranslation()
   const localizedLevels = useLocalizedLevels()
 
-  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X']
+  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV']
 
   return (
     <div className="flex items-end gap-0.5">
